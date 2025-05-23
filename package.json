@@ -1,0 +1,24 @@
+{
+  "name": "aimtraining",
+  "version": "1.0.0",
+  "description": "If you think that someday you will aim properly",
+  "main": "index.js",
+  "engines": {
+    "node": "~v23.0.0"
+  },
+  "scripts": {
+    "test": "test",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite build"
+  },
+  "keywords": [
+    "Aim",
+    "Training"
+  ],
+  "author": "Marron",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}
