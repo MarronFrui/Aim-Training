@@ -4,6 +4,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  color: white;
+  font-family: sans-serif;
 }
 
 .graph-grid {
@@ -21,33 +23,70 @@ body {
   z-index: 0;
 }
 
-#StartButton {
-  position: relative;
-  padding: 6px 12px;
-  font-size: 18px;
-  background-color: #4caf50;
+button,
+#score-container,
+#timer {
   color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: center;
-  z-index: 1;
-  bottom: -80vh;
+  user-select: none;
 }
 
-#StartButton:hover {
+button {
+  padding: 6px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #4caf50;
+  transition: background-color 0.3s ease;
+  z-index: 2;
+}
+
+button:hover {
   background-color: #2de036;
 }
 
+#StartButton {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
 #timer {
   position: fixed;
   bottom: 10px;
   right: 10px;
-  color: white;
-  font-size: 14px;
   font-family: monospace;
+  font-size: 14px;
   opacity: 0.6;
+  z-index: 2;
+}
+
+#score-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  padding: 0;
+  opacity: 0.9;
+  border-radius: 0;
+  font-size: 16px;
+  user-select: none;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#max-score {
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: white;
+}
+
+#score {
+  font-weight: normal;
+  color: white;
 }
 
 #target-container {
@@ -55,6 +94,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  z-index: 1;
 }
 
 .target {
@@ -64,4 +104,6 @@ body {
   background-color: red;
   border-radius: 50%;
   cursor: pointer;
+  user-select: none;
+  z-index: 2;
 }
