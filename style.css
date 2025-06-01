@@ -49,3 +49,19 @@ body {
   font-family: monospace;
   opacity: 0.6;
 }
+
+#target-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.target {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: red;
+  border-radius: 50%;
+  cursor: pointer;
+}
