@@ -5,13 +5,13 @@ const scoreContainer = document.getElementById("score-container");
 const scoreDisplay = document.getElementById("score");
 const maxScoreDisplay = document.getElementById("max-score");
 
-let intervalId;
+let gameTime;
 let score = 0;
 let maxScore = 0;
 const targetsPositions = [];
 
 button.addEventListener("click", () => {
-  clearInterval(intervalId);
+  clearInterval(gameTime);
   let timeLeft = 60;
   updateTimer(timeLeft);
   startGame();
