@@ -104,6 +104,5 @@ button:hover {
   background-color: red;
   border-radius: 50%;
   cursor: pointer;
-  user-select: none;
   z-index: 2;
 }

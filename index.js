@@ -18,11 +18,11 @@ button.addEventListener("click", () => {
   button.style.display = "none";
   scoreDisplay.style.display = "block";
 
-  intervalId = setInterval(() => {
+  gameTime = setInterval(() => {
     timeLeft--;
     updateTimer(timeLeft);
     if (timeLeft <= 0) {
-      clearInterval(intervalId);
+      clearInterval(gameTime);
       timer.textContent = "";
       container.innerHTML = "";
       button.style.display = "block";
