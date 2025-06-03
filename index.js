@@ -1,4 +1,4 @@
-import { spawnTarget } from "./Gamemode/classicMode";
+import { spawnTarget } from "./gamemode/classicmode.js";
 
 const button = document.getElementById("StartButton");
 const timer = document.getElementById("timer");
