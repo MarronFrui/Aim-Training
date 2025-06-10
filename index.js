@@ -1,5 +1,6 @@
 import { spawnTarget } from "./gamemode/classicmode.js";
 
+const menu = document.getElementById("menu");
 const button = document.getElementById("StartButton");
 const timer = document.getElementById("timer");
 const container = document.getElementById("target-container");
@@ -17,6 +18,7 @@ button.addEventListener("click", () => {
   updateTimer(timeLeft);
   startGame();
   button.style.display = "none";
+  menu.style.display = "none";
   scoreDisplay.style.display = "block";
 
   gameTime = setInterval(() => {
