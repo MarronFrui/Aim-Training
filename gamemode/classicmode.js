@@ -30,17 +30,17 @@ export function spawnTarget(container, targetsPositions, onTargetHit) {
   x = Math.random() * (window.innerWidth - targetSize);
   y = Math.random() * (window.innerHeight - targetSize);
 
-  // Need to think another way to deal with exceptions
+  // need to edit overlaps scorezone
 
   // const overlapsScoreZone =
   //   x + targetSize > scoreZone.x && y < scoreZone.height;
 
-  // const overlapsOtherTarget = targetsPositions.some((pos) => {
-  //   const dx = pos.x - x;
-  //   const dy = pos.y - y;
-  //   const distance = Math.sqrt(dx * dx + dy * dy);
-  //   return distance < targetSize;
-  // });
+  const overlapsOtherTarget = targetsPositions.some((pos) => {
+    const dx = pos.x - x;
+    const dy = pos.y - y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    return distance < targetSize;
+  });
 
   target.style.left = `${x}px`;
   target.style.top = `${y}px`;
