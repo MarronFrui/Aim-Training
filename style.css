@@ -43,18 +43,15 @@ button:hover {
 }
 
 #StartButton {
+  margin-top: 18rem;
   scale: 3;
-  position: fixed;
-  bottom: 50px;
-  left: 53%;
-  transform: translateX(-50%);
   z-index: 3;
 }
 
 .menu {
   display: flex;
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 45%;
   flex-direction: column;
   justify-content: center;
