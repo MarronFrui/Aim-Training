@@ -113,3 +113,10 @@ button:hover {
   cursor: pointer;
   z-index: 2;
 }
+
+input[type="radio"] {
+  display: block;
+  margin: 10px 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
