@@ -10,20 +10,27 @@
   <body>
     <div class="grid"></div>
     <section class="menu" id="menu">
-      <h2>Select game mode</h2>
-      <form action="menu-selection" method="form"></form>
-      <input type="radio" name="game-mode" value="classic" checked /> Classic
-      <input type="radio" name="game-mode" value="flick" /> Flick Shot
-      <input type="radio" name="game-mode" value="tracking" /> Tracking
+      <div class="menu-box">
+        <h2>Select game mode</h2>
+        <form action="menu-selection" method="form">
+          <input type="radio" name="game-mode" value="classic" checked />Classic
+          <input type="radio" name="game-mode" value="flick" /> Flick Shot
+          <input type="radio" name="game-mode" value="tracking" /> Tracking
+        </form>
+      </div>
       <button id="StartButton">Start</button>
     </section>
 
-    <div id="timer"></div>
-    <div id="score-container">
-      <div id="max-score">High Score : 0</div>
-      <div id="score" style="display: none">Score : 0</div>
-    </div>
-    <div id="target-container"></div>
-    <script type="module" src="index.js"></script>
+    <section>
+      <div id="timer"></div>
+
+      <div id="score-container">
+        <div id="max-score">High Score : 0</div>
+        <div id="score" style="display: none">Score : 0</div>
+      </div>
+
+      <div id="target-container"></div>
+      <script type="module" src="index.js"></script>
+    </section>
   </body>
 </html>
