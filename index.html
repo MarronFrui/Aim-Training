@@ -12,10 +12,35 @@
     <section class="menu" id="menu">
       <div class="menu-container">
         <h2>Select game mode</h2>
-        <form class="menu-checkbox" action="menu-selection" method="form">
-          <input type="radio" name="game-mode" value="classic" checked />Classic
-          <input type="radio" name="game-mode" value="flick" /> Flick Shot
-          <input type="radio" name="game-mode" value="tracking" /> Tracking
+        <form action="menu-selection" method="form">
+          <label style="display: flex; align-items: center; margin-bottom: 4px">
+            <input
+              type="radio"
+              name="mode"
+              value="classic"
+              checked
+              style="margin-right: 6px"
+            />
+            Classic
+          </label>
+          <label style="display: flex; align-items: center; margin-bottom: 4px">
+            <input
+              type="radio"
+              name="mode"
+              value="flick"
+              style="margin-right: 6px"
+            />
+            Flick Shot
+          </label>
+          <label style="display: flex; align-items: center">
+            <input
+              type="radio"
+              name="mode"
+              value="tracking"
+              style="margin-right: 6px"
+            />
+            Tracking
+          </label>
         </form>
       </div>
       <button id="StartButton">Start</button>
