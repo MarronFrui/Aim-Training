@@ -1,12 +1,6 @@
 export function spawnTarget(container, targetsPositions, onTargetHit) {
   const target = document.createElement("div");
   const targetSize = 40;
-  const scoreZone = {
-    x: window.innerWidth - 200,
-    y: 0,
-    width: 200,
-    height: 80,
-  };
 
   let x, y, overlapsOtherTarget;
 
@@ -26,15 +20,16 @@ export function spawnTarget(container, targetsPositions, onTargetHit) {
   target.style.left = `${x}px`;
   target.style.top = `${y}px`;
 
+  const index = targetsPositions.length;
   targetsPositions.push({ x, y });
+
+  target.dataset.index = index;
 
   target.addEventListener("click", () => {
     onTargetHit();
     target.remove();
-    const index = targetsPositions.findIndex(
-      (pos) => pos.x === x && pos.y === y
-    );
-    if (index > -1) targetsPositions.splice(index, 1);
+    const removeIndex = Number(target.dataset.index);
+    targetsPositions.splice(removeIndex, 1);
     spawnTarget(container, targetsPositions, onTargetHit);
   });
 
