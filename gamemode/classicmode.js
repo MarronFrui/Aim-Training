@@ -11,21 +11,7 @@ export function spawnTarget(container, targetsPositions, onTargetHit) {
     height: 80,
   };
 
-  // After the object is created:
-  document.addEventListener("click", (event) => {
-    // Optionally check if the click is inside scoreZone
-    if (
-      event.clientX >= scoreZone.x &&
-      event.clientX <= scoreZone.x + scoreZone.width &&
-      event.clientY >= scoreZone.y &&
-      event.clientY <= scoreZone.y + scoreZone.height
-    ) {
-      console.log("aie");
-    }
-  });
-
   let x, y;
-  let tries = 0;
 
   x = Math.random() * (window.innerWidth - targetSize);
   y = Math.random() * (window.innerHeight - targetSize);
