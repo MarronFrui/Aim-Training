@@ -6,11 +6,11 @@ const timer = document.getElementById("timer");
 const container = document.getElementById("target-container");
 const scoreDisplay = document.getElementById("score");
 const maxScoreDisplay = document.getElementById("max-score");
+const targetsPositions = [];
 
 let gameTime;
 let score = 0;
 let maxScore = 0;
-const targetsPositions = [];
 
 button.addEventListener("click", () => {
   clearInterval(gameTime);
