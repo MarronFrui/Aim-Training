@@ -29,7 +29,7 @@ button.addEventListener("click", () => {
       timer.textContent = "";
       container.innerHTML = "";
       button.style.display = "block";
-      menu.style.display = "block";
+      menu.style.display = "flex";
       scoreDisplay.style.display = "none";
       targetsPositions.length = 0;
 
