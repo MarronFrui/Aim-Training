@@ -1,17 +1,19 @@
 export function spawnFlickTarget(container, onTargetHit) {
   const target = document.createElement("div");
+  const targetSize = 40;
+
   target.classList.add("target");
 
-  const targetSize = 40;
-  const x = Math.random() * (window.innerWidth - targetSize);
-  const y = Math.random() * (window.innerHeight - targetSize);
+  let x, y;
+  x = Math.random() * (window.innerWidth - targetSize);
+  y = Math.random() * (window.innerHeight - targetSize);
 
   target.style.left = `${x}px`;
   target.style.top = `${y}px`;
 
   const timeout = setTimeout(() => {
     target.remove();
-    spawnFlickTarget(container, onTargetHit); // spawn next regardless of hit
+    spawnFlickTarget(container, onTargetHit);
   }, 700);
 
   target.addEventListener("click", () => {
