@@ -1,5 +1,5 @@
 import { spawnTarget } from "./gamemode/classicmode.js";
-import * as flickshotmode from "./gamemode/flickshotmode.js";
+import { spawnFlickTarget } from "./gamemode/flickshotmode.js";
 import { spawnTrackingTarget } from "./gamemode/trackingmode.js";
 
 const menu = document.getElementById("menu");
@@ -13,11 +13,6 @@ const targetsPositions = [];
 let gameTime;
 let score = 0;
 let maxScore = 0;
-let timeLeft = 60;
-
-function getTimeLeft() {
-  return timeLeft;
-}
 
 button.addEventListener("click", () => {
   clearInterval(gameTime);
@@ -33,7 +28,6 @@ button.addEventListener("click", () => {
     updateTimer(timeLeft);
     if (timeLeft <= 0) {
       clearInterval(gameTime);
-      flickshotmode.stopFlickTargets();
       timer.textContent = "";
       container.innerHTML = "";
       button.style.display = "block";
@@ -84,7 +78,7 @@ function startGame() {
       spawnTarget(container, targetsPositions, onTargetHit);
     }
   } else if (mode === "flick shot") {
-    flickshotmode.spawnFlickTarget(container, onTargetHit, getTimeLeft);
+    spawnFlickTarget(container, onTargetHit);
   } else if (mode === "tracking") {
     spawnTrackingTarget(container, onTargetHit);
   }
