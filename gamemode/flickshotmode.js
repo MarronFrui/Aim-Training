@@ -2,6 +2,7 @@ export function spawnFlickTarget(container, onTargetHit) {
   const target = document.createElement("div");
   const targetSize = 40;
 
+  console.log("target appended to container");
   target.classList.add("target");
 
   let x, y;
