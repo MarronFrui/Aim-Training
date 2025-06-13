@@ -1,4 +1,6 @@
 import { spawnTarget } from "./gamemode/classicmode.js";
+import { spawnFlickTarget } from "./gamemode/flickshotmode.js";
+import { spawnTrackingTarget } from "./gamemode/trackingmode.js";
 
 const menu = document.getElementById("menu");
 const button = document.getElementById("StartButton");
@@ -65,12 +67,19 @@ function onTargetHit() {
 }
 
 function startGame() {
+  const mode = document.querySelector('input[name="mode"]:checked').value;
   container.innerHTML = "";
   score = 0;
   targetsPositions.length = 0;
   updateScore();
 
-  for (let i = 0; i < 5; i++) {
-    spawnTarget(container, targetsPositions, onTargetHit);
+  if (mode === "classic") {
+    for (let i = 0; i < 5; i++) {
+      spawnTarget(container, targetsPositions, onTargetHit);
+    }
+  } else if (mode === "flick shot") {
+    spawnFlickTarget(container, onTargetHit);
+  } else if (mode === "tracking") {
+    spawnTrackingTarget(container, onTargetHit);
   }
 }
