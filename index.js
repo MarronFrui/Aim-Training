@@ -10,30 +10,29 @@ const scoreDisplay = document.getElementById("score");
 const maxScoreDisplay = document.getElementById("max-score");
 const targetsPositions = [];
 
-let gameTime;
+let timerInterval;
 let score = 0;
 let maxScore = 0;
+let timeLeft = 5;
 
 button.addEventListener("click", () => {
-  clearInterval(gameTime);
-  let timeLeft = 60;
+  clearInterval(timerInterval);
   updateTimer(timeLeft);
   startGame();
   button.style.display = "none";
   menu.style.display = "none";
   scoreDisplay.style.display = "block";
 
-  gameTime = setInterval(() => {
+  timerInterval = setInterval(() => {
     timeLeft--;
     updateTimer(timeLeft);
     if (timeLeft <= 0) {
-      clearInterval(gameTime);
+      clearInterval(timerInterval);
       timer.textContent = "";
       container.innerHTML = "";
       button.style.display = "block";
       menu.style.display = "flex";
       scoreDisplay.style.display = "none";
-      targetsPositions.length = 0;
 
       if (score > maxScore) {
         maxScore = score;
@@ -78,8 +77,12 @@ function startGame() {
       spawnTarget(container, targetsPositions, onTargetHit);
     }
   } else if (mode === "flick shot") {
-    spawnFlickTarget(container, onTargetHit);
+    spawnFlickTarget(container, onTargetHit, endTime);
   } else if (mode === "tracking") {
     spawnTrackingTarget(container, onTargetHit);
   }
+}
+
+function endTime() {
+  // if (timeLeft === 0) return;
 }

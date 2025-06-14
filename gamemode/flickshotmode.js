@@ -1,26 +1,23 @@
-export function spawnFlickTarget(container, onTargetHit) {
-  const maxAttempts = 100;
+export function spawnFlickTarget(container, onTargetHit, endTime) {
   const target = document.createElement("div");
   const targetSize = 40;
 
   let x, y;
-  let lastMousePosition = { x: 0, y: 0 };
-  let attempts = 0;
-
-  window.addEventListener("mousemove", (e) => {
-    lastMousePosition = { x: e.clientX, y: e.clientY };
-  });
 
   target.classList.add("target");
 
-  do {
-    x = Math.random() * (window.innerWidth - targetSize);
-    y = Math.random() * (window.innerHeight - targetSize);
-    attempts++;
-  } while (
-    attempts < maxAttempts &&
-    Math.hypot(x - lastMousePosition.x, y - lastMousePosition.y) < 500
-  );
+  x = window.innerWidth / 2 + 500;
+  y = window.innerHeight / 2;
+
+  // do {
+  //   x = Math.random() * (window.innerWidth - targetSize);
+  //   y = Math.random() * (window.innerHeight - targetSize);
+  //   attempts++;
+  // } while (
+  //   attempts < maxAttempts &&
+  //   Math.hypot(x - lastMousePosition.x, y - lastMousePosition.y) < 500
+
+  // );
 
   target.style.left = `${x}px`;
   target.style.top = `${y}px`;
@@ -36,5 +33,10 @@ export function spawnFlickTarget(container, onTargetHit) {
     target.remove();
     spawnFlickTarget(container, onTargetHit);
   });
+
+  if (endTime === 0) {
+    target.remove();
+    return;
+  }
   container.appendChild(target);
 }
