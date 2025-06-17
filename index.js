@@ -70,11 +70,11 @@ function onTargetHit() {
   updateScore();
 }
 
-// Boucle asynchrone qui crée les cibles FlickShot tant que le temps n'est pas écoulé
+// Boucle asynchrone qui créer les cibles FlickShot tant que le temps n'est pas écoulé
 async function flickShotLoop() {
   while (timeLeft > 0) {
     spawnFlickTarget(container, onTargetHit);
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 700));
   }
 }
 

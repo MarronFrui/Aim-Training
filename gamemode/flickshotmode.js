@@ -1,6 +1,6 @@
 export function spawnFlickTarget(container, onTargetHit) {
   const target = document.createElement("div");
-  const targetSize = 40;
+  const targetSize = 70;
   const x = Math.random() * (window.innerWidth - targetSize);
   const y = Math.random() * (window.innerHeight - targetSize);
 
@@ -10,13 +10,12 @@ export function spawnFlickTarget(container, onTargetHit) {
 
   const timeout = setTimeout(() => {
     target.remove();
-  }, 800);
+  }, 700);
 
   target.addEventListener("click", () => {
     clearTimeout(timeout);
     onTargetHit();
     target.remove();
-    spawnFlickTarget(container, onTargetHit);
   });
 
   container.appendChild(target);
