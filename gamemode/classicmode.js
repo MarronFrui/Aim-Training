@@ -26,7 +26,7 @@ export function spawnTarget(container, targetsPositions, onTargetHit) {
   target.dataset.index = index;
 
   target.addEventListener("click", () => {
-    onTargetHit();
+    onTargetHit(target);
     target.remove();
     const removeIndex = Number(target.dataset.index);
     targetsPositions.splice(removeIndex, 1);

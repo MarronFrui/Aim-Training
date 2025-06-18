@@ -14,7 +14,7 @@ export function spawnFlickTarget(container, onTargetHit) {
 
   target.addEventListener("click", () => {
     clearTimeout(timeout);
-    onTargetHit();
+    onTargetHit(target);
     target.remove();
   });
 

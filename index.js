@@ -10,16 +10,70 @@ const scoreDisplay = document.getElementById("score");
 const maxScoreDisplay = document.getElementById("max-score");
 const targetsPositions = [];
 
-let timerInterval;
+let timerInterval = undefined;
 let score = 0;
 let maxScore = 0;
-let timeLeft = 5;
+let timeLeft = null;
 
 export function getTimeLeft() {
   return timeLeft;
 }
 
-button.addEventListener("click", () => {
+function updateTimer(seconds) {
+  const min = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  timer.textContent = `${min}:${s < 10 ? "0" : ""}${s}`;
+}
+
+function updateScore() {
+  scoreDisplay.textContent = `Score : ${score}`;
+  if (score > maxScore) {
+    maxScore = score;
+    maxScoreDisplay.textContent = `High Score : ${maxScore}`;
+  }
+}
+
+function onTargetHit(target) {
+  score++;
+  updateScore();
+
+  const hitEffect = document.createElement("div");
+  hitEffect.className = "hit-effect";
+
+  const rect = target.getBoundingClientRect();
+  hitEffect.style.left = `${rect.left + rect.width / 8}px`;
+  hitEffect.style.top = `${rect.top + rect.height / 8}px`;
+
+  document.body.appendChild(hitEffect);
+  setTimeout(() => document.body.removeChild(hitEffect), 300);
+}
+
+// Boucle asynchrone qui créer les cibles FlickShot tant que le temps n'est pas écoulé
+async function flickShotLoop() {
+  while (timeLeft > 0) {
+    spawnFlickTarget(container, onTargetHit);
+    await new Promise((resolve) => setTimeout(resolve, 700));
+  }
+}
+function startGame() {
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+  container.innerHTML = "";
+  score = 0;
+  targetsPositions.length = 0;
+  updateScore();
+
+  if (mode === "classic") {
+    for (let i = 0; i < 5; i++) {
+      spawnTarget(container, targetsPositions, onTargetHit);
+    }
+  } else if (mode === "flick shot") {
+    flickShotLoop();
+  } else if (mode === "tracking") {
+    spawnTrackingTarget(container, onTargetHit);
+  }
+}
+
+button.addEventListener("click", (_event) => {
   clearInterval(timerInterval);
   timeLeft = 5;
   updateTimer(timeLeft);
@@ -50,48 +104,3 @@ button.addEventListener("click", () => {
     }
   }, 1000);
 });
-
-function updateTimer(seconds) {
-  const min = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  timer.textContent = `${min}:${s < 10 ? "0" : ""}${s}`;
-}
-
-function updateScore() {
-  scoreDisplay.textContent = `Score : ${score}`;
-  if (score > maxScore) {
-    maxScore = score;
-    maxScoreDisplay.textContent = `High Score : ${maxScore}`;
-  }
-}
-
-function onTargetHit() {
-  score++;
-  updateScore();
-}
-
-// Boucle asynchrone qui créer les cibles FlickShot tant que le temps n'est pas écoulé
-async function flickShotLoop() {
-  while (timeLeft > 0) {
-    spawnFlickTarget(container, onTargetHit);
-    await new Promise((resolve) => setTimeout(resolve, 700));
-  }
-}
-
-function startGame() {
-  const mode = document.querySelector('input[name="mode"]:checked').value;
-  container.innerHTML = "";
-  score = 0;
-  targetsPositions.length = 0;
-  updateScore();
-
-  if (mode === "classic") {
-    for (let i = 0; i < 5; i++) {
-      spawnTarget(container, targetsPositions, onTargetHit);
-    }
-  } else if (mode === "flick shot") {
-    flickShotLoop();
-  } else if (mode === "tracking") {
-    spawnTrackingTarget(container, onTargetHit);
-  }
-}
