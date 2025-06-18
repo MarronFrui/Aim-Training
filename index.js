@@ -55,29 +55,8 @@ async function flickShotLoop() {
     await new Promise((resolve) => setTimeout(resolve, 700));
   }
 }
-function startGame() {
-  const mode = document.querySelector('input[name="mode"]:checked').value;
-  container.innerHTML = "";
-  score = 0;
-  targetsPositions.length = 0;
-  updateScore();
 
-  if (mode === "classic") {
-    for (let i = 0; i < 5; i++) {
-      spawnTarget(container, targetsPositions, onTargetHit);
-    }
-  } else if (mode === "flick shot") {
-    flickShotLoop();
-  } else if (mode === "tracking") {
-    spawnTrackingTarget(container, onTargetHit);
-  }
-}
-
-button.addEventListener("click", (_event) => {
-  clearInterval(timerInterval);
-  timeLeft = 5;
-  updateTimer(timeLeft);
-  startGame();
+function menuBehavior() {
   button.style.display = "none";
   menu.style.display = "none";
   scoreDisplay.style.display = "block";
@@ -103,4 +82,30 @@ button.addEventListener("click", (_event) => {
       updateScore();
     }
   }, 1000);
+}
+
+function startGame() {
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+  container.innerHTML = "";
+  score = 0;
+  targetsPositions.length = 0;
+  updateScore();
+
+  if (mode === "classic") {
+    for (let i = 0; i < 5; i++) {
+      spawnTarget(container, targetsPositions, onTargetHit);
+    }
+  } else if (mode === "flick shot") {
+    flickShotLoop();
+  } else if (mode === "tracking") {
+    spawnTrackingTarget(container, onTargetHit);
+  }
+}
+
+button.addEventListener("click", (_event) => {
+  clearInterval(timerInterval);
+  timeLeft = 5;
+  updateTimer(timeLeft);
+  startGame();
+  menuBehavior();
 });
