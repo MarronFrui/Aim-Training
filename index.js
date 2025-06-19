@@ -9,10 +9,14 @@ const container = document.getElementById("target-container");
 const scoreDisplay = document.getElementById("score");
 const maxScoreDisplay = document.getElementById("max-score");
 const targetsPositions = [];
+const highScores = {
+  classic: 0,
+  "flick shot": 0,
+  tracking: 0,
+};
 
 let timerInterval = undefined;
 let score = 0;
-let maxScore = 0;
 let timeLeft = null;
 
 export function getTimeLeft() {
@@ -27,10 +31,6 @@ function updateTimer(seconds) {
 
 function updateScore() {
   scoreDisplay.textContent = `Score : ${score}`;
-  if (score > maxScore) {
-    maxScore = score;
-    maxScoreDisplay.textContent = `High Score : ${maxScore}`;
-  }
 }
 
 function onTargetHit(target) {
@@ -48,7 +48,6 @@ function onTargetHit(target) {
   setTimeout(() => document.body.removeChild(hitEffect), 300);
 }
 
-// Boucle asynchrone qui créer les cibles FlickShot tant que le temps n'est pas écoulé
 async function flickShotLoop() {
   while (timeLeft > 0) {
     spawnFlickTarget(container, onTargetHit);
@@ -56,7 +55,7 @@ async function flickShotLoop() {
   }
 }
 
-function menuBehavior() {
+function menuBehavior(mode) {
   button.style.display = "none";
   menu.style.display = "none";
   scoreDisplay.style.display = "block";
@@ -64,6 +63,7 @@ function menuBehavior() {
   timerInterval = setInterval(() => {
     timeLeft--;
     updateTimer(timeLeft);
+
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       timer.textContent = "";
@@ -72,11 +72,11 @@ function menuBehavior() {
       menu.style.display = "flex";
       scoreDisplay.style.display = "none";
 
-      if (score > maxScore) {
-        maxScore = score;
-        maxScoreDisplay.textContent = `High Score : ${maxScore}`;
+      if (score > highScores[mode]) {
+        highScores[mode] = score;
       }
 
+      maxScoreDisplay.textContent = `High Score (${mode}) : ${highScores[mode]}`;
       scoreDisplay.textContent = `Score : 0`;
       score = 0;
       updateScore();
@@ -91,6 +91,8 @@ function startGame() {
   targetsPositions.length = 0;
   updateScore();
 
+  maxScoreDisplay.textContent = `High Score (${mode}) : ${highScores[mode]}`;
+
   if (mode === "classic") {
     for (let i = 0; i < 5; i++) {
       spawnTarget(container, targetsPositions, onTargetHit);
@@ -100,12 +102,13 @@ function startGame() {
   } else if (mode === "tracking") {
     spawnTrackingTarget(container, onTargetHit);
   }
+
+  menuBehavior(mode);
 }
 
-button.addEventListener("click", (_event) => {
+button.addEventListener("click", () => {
   clearInterval(timerInterval);
   timeLeft = 5;
   updateTimer(timeLeft);
   startGame();
-  menuBehavior();
 });

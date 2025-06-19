@@ -1,6 +1,6 @@
 export function spawnFlickTarget(container, onTargetHit) {
   const target = document.createElement("div");
-  const targetSize = 70;
+  const targetSize = 40;
   const x = Math.random() * (window.innerWidth - targetSize);
   const y = Math.random() * (window.innerHeight - targetSize);
 
