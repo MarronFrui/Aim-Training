@@ -1,10 +1,14 @@
+import { config } from "../config.js";
+
 export function spawnTarget(container, targetsPositions, onTargetHit) {
   const target = document.createElement("div");
-  const targetSize = 40;
+  const targetSize = config.targetSize;
 
   let x, y, overlapsOtherTarget;
 
   target.classList.add("target");
+  target.style.width = `${targetSize}px`;
+  target.style.height = `${targetSize}px`;
 
   do {
     x = Math.random() * (window.innerWidth - targetSize);
