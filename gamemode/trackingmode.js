@@ -1,5 +1,5 @@
 import { config } from "../config.js";
-import { getTimeLeft } from "../index.js"; // pour arrêter proprement
+import { getTimeLeft } from "../index.js";
 
 export function spawnTrackingTarget(container, onTargetHit) {
   const target = document.createElement("div");
@@ -13,38 +13,52 @@ export function spawnTrackingTarget(container, onTargetHit) {
     height: window.innerHeight - config.targetSize,
   };
 
+  const maxSpeed = 0.5;
+  const acceleration = 0.3;
+
+  let velocity = { x: 0, y: 0 };
+  let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  let isHolding = false;
+  let holdInterval = null;
   let pos = {
     x: Math.random() * bounds.width,
     y: Math.random() * bounds.height,
   };
 
-  let velocity = { x: 0, y: 0 };
-  const maxSpeed = 5;
-  const acceleration = 0.5;
+  function stopHold() {
+    if (isHolding) {
+      isHolding = false;
+      clearInterval(holdInterval);
+    }
+  }
 
-  let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  function startHold(target) {
+    if (!isHolding) {
+      isHolding = true;
+      holdInterval = setInterval(() => {
+        if (getTimeLeft() > 0) {
+          onTargetHit(target, "tracking");
+        }
+      }, 50);
+    }
+  }
 
+  document.addEventListener("mouseup", stopHold);
   document.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
   });
-
-  let isHolding = false;
-  let holdInterval = null;
-
-  target.addEventListener("mousedown", () => {
-    isHolding = true;
-    holdInterval = setInterval(() => {
-      if (getTimeLeft() > 0) {
-        onTargetHit(target, "tracking");
-      }
-    }, 50);
+  target.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    startHold(target);
   });
-
-  document.addEventListener("mouseup", () => {
-    isHolding = false;
-    clearInterval(holdInterval);
+  target.addEventListener("mouseenter", (e) => {
+    if (e.buttons === 1) {
+      startHold(target);
+    }
   });
+  target.addEventListener("mouseup", stopHold);
+  target.addEventListener("mouseleave", stopHold);
 
   function targetMove() {
     if (getTimeLeft() <= 0) {
