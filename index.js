@@ -1,6 +1,7 @@
 import { spawnTarget } from "./gamemode/classicmode.js";
 import { spawnFlickTarget } from "./gamemode/flickshotmode.js";
 import { spawnTrackingTarget } from "./gamemode/trackingmode.js";
+import { config } from "./config.js";
 
 const menu = document.getElementById("menu");
 const button = document.getElementById("StartButton");
@@ -41,8 +42,10 @@ function onTargetHit(target) {
   hitEffect.className = "hit-effect";
 
   const rect = target.getBoundingClientRect();
-  hitEffect.style.left = `${rect.left + rect.width / 8}px`;
-  hitEffect.style.top = `${rect.top + rect.height / 8}px`;
+  hitEffect.style.width = `${config.targetSize}px`;
+  hitEffect.style.height = `${config.targetSize}px`;
+  hitEffect.style.left = `${rect.left}px`;
+  hitEffect.style.top = `${rect.top}px`;
 
   document.body.appendChild(hitEffect);
   setTimeout(() => document.body.removeChild(hitEffect), 300);
