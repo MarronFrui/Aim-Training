@@ -36,7 +36,7 @@ export function spawnTrackingTarget(container, onTargetHit) {
     isHolding = true;
     holdInterval = setInterval(() => {
       if (getTimeLeft() > 0) {
-        onTargetHit(target, { showEffect: false, mode: "tracking" });
+        onTargetHit(target, "tracking");
       }
     }, 50);
   });

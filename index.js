@@ -34,21 +34,24 @@ function updateScore() {
   scoreDisplay.textContent = `Score : ${score}`;
 }
 
-function onTargetHit(target) {
+function onTargetHit(target, mode = "classic") {
+  if (mode !== "tracking") {
+    // Animation on hit
+    const hitEffect = document.createElement("div");
+    hitEffect.className = "hit-effect";
+
+    const rect = target.getBoundingClientRect();
+    hitEffect.style.width = `${config.targetSize}px`;
+    hitEffect.style.height = `${config.targetSize}px`;
+    hitEffect.style.left = `${rect.left}px`;
+    hitEffect.style.top = `${rect.top}px`;
+
+    document.body.appendChild(hitEffect);
+    setTimeout(() => document.body.removeChild(hitEffect), 300);
+  }
+
   score++;
   updateScore();
-
-  const hitEffect = document.createElement("div");
-  hitEffect.className = "hit-effect";
-
-  const rect = target.getBoundingClientRect();
-  hitEffect.style.width = `${config.targetSize}px`;
-  hitEffect.style.height = `${config.targetSize}px`;
-  hitEffect.style.left = `${rect.left}px`;
-  hitEffect.style.top = `${rect.top}px`;
-
-  document.body.appendChild(hitEffect);
-  setTimeout(() => document.body.removeChild(hitEffect), 300);
 }
 
 async function flickShotLoop() {
