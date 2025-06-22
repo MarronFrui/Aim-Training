@@ -15,6 +15,21 @@ export function spawnTrackingTarget(container, onTargetHit) {
 
   const maxSpeed = 0.5;
   const acceleration = 0.3;
+  const handleMouseMove = (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  };
+
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    handleIsInTarget(target);
+  };
+
+  const handleMouseEnter = (e) => {
+    if (e.buttons === 1) {
+      handleIsInTarget(target);
+    }
+  };
 
   let velocity = { x: 0, y: 0 };
   let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -25,14 +40,14 @@ export function spawnTrackingTarget(container, onTargetHit) {
     y: Math.random() * bounds.height,
   };
 
-  function stopHold() {
+  function handleIsOutOfTarget() {
     if (isHolding) {
       isHolding = false;
       clearInterval(holdInterval);
     }
   }
 
-  function startHold(target) {
+  function handleIsInTarget(target) {
     if (!isHolding) {
       isHolding = true;
       holdInterval = setInterval(() => {
@@ -43,26 +58,21 @@ export function spawnTrackingTarget(container, onTargetHit) {
     }
   }
 
-  document.addEventListener("mouseup", stopHold);
-  document.addEventListener("mousemove", (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
-  target.addEventListener("mousedown", (e) => {
-    e.preventDefault();
-    startHold(target);
-  });
-  target.addEventListener("mouseenter", (e) => {
-    if (e.buttons === 1) {
-      startHold(target);
-    }
-  });
-  target.addEventListener("mouseup", stopHold);
-  target.addEventListener("mouseleave", stopHold);
+  document.addEventListener("mousemove", handleMouseMove);
+  target.addEventListener("mousedown", handleMouseDown);
+  target.addEventListener("mouseenter", handleMouseEnter);
+  target.addEventListener("mouseup", handleIsOutOfTarget);
+  target.addEventListener("mouseleave", handleIsOutOfTarget);
 
   function targetMove() {
+    console.log(getTimeLeft());
     if (getTimeLeft() <= 0) {
       target.remove();
+      document.removeEventListener("mousemove", handleMouseMove);
+      target.removeEventListener("mousedown", handleMouseDown);
+      target.removeEventListener("mouseenter", handleMouseEnter);
+      target.removeEventListener("mouseup", handleIsOutOfTarget);
+      target.removeEventListener("mouseleave", handleIsOutOfTarget);
       return;
     }
 
