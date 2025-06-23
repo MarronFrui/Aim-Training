@@ -114,7 +114,7 @@ function startGame() {
 
 button.addEventListener("click", () => {
   clearInterval(timerInterval);
-  timeLeft = 20;
+  timeLeft = 10;
   updateTimer(timeLeft);
   startGame();
 });

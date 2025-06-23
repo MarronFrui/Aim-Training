@@ -69,10 +69,7 @@ export function spawnTrackingTarget(container, onTargetHit) {
     if (getTimeLeft() <= 0) {
       target.remove();
       document.removeEventListener("mousemove", handleMouseMove);
-      target.removeEventListener("mousedown", handleMouseDown);
-      target.removeEventListener("mouseenter", handleMouseEnter);
-      target.removeEventListener("mouseup", handleIsOutOfTarget);
-      target.removeEventListener("mouseleave", handleIsOutOfTarget);
+      handleIsOutOfTarget();
       return;
     }
 
