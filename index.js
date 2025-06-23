@@ -1,7 +1,8 @@
 import { spawnTarget } from "./gamemode/classicmode.js";
 import { spawnFlickTarget } from "./gamemode/flickshotmode.js";
 import { spawnTrackingTarget } from "./gamemode/trackingmode.js";
-import { config } from "./config.js";
+import { diameter } from "./config.js";
+import { targetMove } from "./config.js";
 
 const menu = document.getElementById("menu");
 const button = document.getElementById("StartButton");
@@ -20,7 +21,7 @@ let timerInterval = undefined;
 let score = 0;
 let timeLeft = null;
 
-export function getTimeLeft() {
+function getTimeLeft() {
   return timeLeft;
 }
 
@@ -41,8 +42,8 @@ function onTargetHit(target, mode = "classic") {
     hitEffect.className = "hit-effect";
 
     const rect = target.getBoundingClientRect();
-    hitEffect.style.width = `${config.targetSize}px`;
-    hitEffect.style.height = `${config.targetSize}px`;
+    hitEffect.style.width = `${diameter.targetSize}px`;
+    hitEffect.style.height = `${diameter.targetSize}px`;
     hitEffect.style.left = `${rect.left}px`;
     hitEffect.style.top = `${rect.top}px`;
 
@@ -106,7 +107,7 @@ function startGame() {
   } else if (mode === "flick shot") {
     flickShotLoop();
   } else if (mode === "tracking") {
-    spawnTrackingTarget(container, onTargetHit);
+    spawnTrackingTarget(container, onTargetHit, getTimeLeft);
   }
 
   menuBehavior(mode);

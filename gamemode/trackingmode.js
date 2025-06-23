@@ -1,37 +1,28 @@
-import { config } from "../config.js";
-import { getTimeLeft } from "../index.js";
+import { diameter } from "../config.js";
+import { targetMove } from "../config.js";
 
-export function spawnTrackingTarget(container, onTargetHit) {
+export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
   const target = document.createElement("div");
   target.classList.add("target");
-  target.style.width = `${config.targetSize}px`;
-  target.style.height = `${config.targetSize}px`;
+  target.style.width = `${diameter.targetSize}px`;
+  target.style.height = `${diameter.targetSize}px`;
   container.appendChild(target);
 
-  const bounds = {
-    width: window.innerWidth - config.targetSize,
-    height: window.innerHeight - config.targetSize,
-  };
+  let isHolding = false;
+  let holdInterval = null;
 
   const handleMouseDown = (e) => {
     e.preventDefault();
-    handleIsInTarget(target);
+    IsInTarget(target);
   };
 
   const handleMouseEnter = (e) => {
     if (e.buttons === 1) {
-      handleIsInTarget(target);
+      IsInTarget(target);
     }
   };
 
-  let isHolding = false;
-  let holdInterval = null;
-  let pos = {
-    x: Math.random() * bounds.width,
-    y: Math.random() * bounds.height,
-  };
-
-  function handleIsInTarget(target) {
+  function IsInTarget() {
     if (!isHolding) {
       isHolding = true;
       holdInterval = setInterval(() => {
@@ -54,57 +45,5 @@ export function spawnTrackingTarget(container, onTargetHit) {
   target.addEventListener("mouseup", IsOutOfTarget);
   target.addEventListener("mouseleave", IsOutOfTarget);
 
-  let direction = { x: 0, y: 0 };
-  let distanceToTravel = 0;
-  let distanceTraveled = 0;
-
-  function chooseNewDirection() {
-    const angle = Math.random() * 2 * Math.PI;
-    const maxDistance = Math.hypot(window.innerWidth, window.innerHeight);
-    distanceToTravel = Math.random() * (maxDistance / 2 - 100) + 100;
-
-    const speed = 2;
-    direction.x = Math.cos(angle) * speed;
-    direction.y = Math.sin(angle) * speed;
-
-    distanceTraveled = 0;
-  }
-
-  chooseNewDirection();
-
-  function targetMove() {
-    if (getTimeLeft() <= 0) {
-      target.remove();
-      IsOutOfTarget();
-      return;
-    }
-
-    pos.x += direction.x;
-    pos.y += direction.y;
-    distanceTraveled += Math.hypot(direction.x, direction.y);
-
-    const hitLeft = pos.x <= 0;
-    const hitRight = pos.x >= bounds.width;
-    const hitTop = pos.y <= 0;
-    const hitBottom = pos.y >= bounds.height;
-
-    if (
-      hitLeft ||
-      hitRight ||
-      hitTop ||
-      hitBottom ||
-      distanceTraveled >= distanceToTravel
-    ) {
-      chooseNewDirection();
-      pos.x = Math.max(0, Math.min(bounds.width, pos.x));
-      pos.y = Math.max(0, Math.min(bounds.height, pos.y));
-    }
-
-    target.style.left = `${pos.x}px`;
-    target.style.top = `${pos.y}px`;
-
-    requestAnimationFrame(targetMove);
-  }
-
-  targetMove();
+  targetMove(target, IsOutOfTarget, getTimeLeft);
 }

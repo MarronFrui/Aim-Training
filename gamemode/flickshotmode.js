@@ -1,8 +1,8 @@
-import { config } from "../config.js";
+import { diameter } from "../config.js";
 
 export function spawnFlickTarget(container, onTargetHit) {
   const target = document.createElement("div");
-  const targetSize = config.targetSize;
+  const targetSize = diameter.targetSize;
 
   const x = Math.random() * (window.innerWidth - targetSize);
   const y = Math.random() * (window.innerHeight - targetSize);
