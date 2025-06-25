@@ -2,7 +2,6 @@ import { spawnTarget } from "./gamemode/classicmode.js";
 import { spawnFlickTarget } from "./gamemode/flickshotmode.js";
 import { spawnTrackingTarget } from "./gamemode/trackingmode.js";
 import { diameter } from "./config.js";
-import { targetMove } from "./config.js";
 
 const menu = document.getElementById("menu");
 const button = document.getElementById("StartButton");
@@ -10,13 +9,13 @@ const timer = document.getElementById("timer");
 const container = document.getElementById("target-container");
 const scoreDisplay = document.getElementById("score");
 const maxScoreDisplay = document.getElementById("max-score");
+const accuracyDisplay = document.getElementById("accuracy");
 const targetsPositions = [];
 const highScores = {
   classic: 0,
   "flick shot": 0,
   tracking: 0,
 };
-
 let timerInterval = undefined;
 let score = 0;
 let timeLeft = null;
@@ -66,6 +65,7 @@ function menuBehavior(mode) {
   button.style.display = "none";
   menu.style.display = "none";
   scoreDisplay.style.display = "block";
+  accuracyDisplay.style.display = "block";
 
   timerInterval = setInterval(() => {
     timeLeft--;
@@ -78,6 +78,7 @@ function menuBehavior(mode) {
       button.style.display = "block";
       menu.style.display = "flex";
       scoreDisplay.style.display = "none";
+      accuracyDisplay.style.display = "none";
 
       if (score > highScores[mode]) {
         highScores[mode] = score;
@@ -105,8 +106,8 @@ function handleAccuracy() {
       accurateClick++;
     }
 
-    const acc = (accurateClick / shotFired) * 100;
-    console.log(`Accuracy: ${acc.toFixed(2)}%`);
+    const accuracyValue = (accurateClick / (shotFired - 1)) * 100; //(-1) remove very first click on start button
+    accuracyDisplay.textContent = `Accuracy : ${accuracyValue.toFixed(2)}%`;
 
     if (getTimeLeft() <= 0) {
       document.removeEventListener("click", accuracy);
