@@ -91,6 +91,33 @@ function menuBehavior(mode) {
   }, 1000);
 }
 
+function handleAccuracy() {
+  let shotFired = 0;
+  let accurateClick = 0;
+
+  const accuracy = (event) => {
+    shotFired++;
+
+    const target = event.target;
+    const isHit = target.classList.contains("target");
+
+    if (isHit) {
+      accurateClick++;
+    }
+
+    const acc = (accurateClick / shotFired) * 100;
+    console.log(`Accuracy: ${acc.toFixed(2)}%`);
+
+    if (getTimeLeft() <= 0) {
+      document.removeEventListener("click", accuracy);
+      shotFired = 0;
+      accurateClick = 0;
+    }
+  };
+
+  document.addEventListener("click", accuracy);
+}
+
 function startGame() {
   const mode = document.querySelector('input[name="mode"]:checked').value;
   container.innerHTML = "";
@@ -117,5 +144,6 @@ button.addEventListener("click", () => {
   clearInterval(timerInterval);
   timeLeft = 10;
   updateTimer(timeLeft);
+  handleAccuracy();
   startGame();
 });

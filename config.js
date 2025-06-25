@@ -8,7 +8,6 @@ export function targetMove(target, IsOutOfTarget, getTimeLeft, state = null) {
     height: window.innerHeight - diameter.targetSize,
   };
 
-  // Initialiser l'état s'il n'existe pas encore
   if (!state) {
     state = {
       direction: { x: 0, y: 0 },
