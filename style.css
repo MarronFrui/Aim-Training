@@ -49,6 +49,11 @@ button:hover {
   z-index: 3;
 }
 
+#StatsButton {
+  position: fixed;
+  z-index: 2;
+}
+
 .menu {
   display: flex;
   position: fixed;

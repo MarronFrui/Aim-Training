@@ -95,12 +95,12 @@ function menuBehavior(mode) {
 function handleAccuracy() {
   let shotFired = 0;
   let accurateClick = 0;
-  let ignoreNextClick = true; // pour ignorer le tout premier clic
+  let ignoreNextClick = true;
 
   const accuracy = (event) => {
     if (ignoreNextClick) {
       ignoreNextClick = false;
-      return; // ignore le premier clic (celui du bouton Start)
+      return;
     }
 
     shotFired++;
