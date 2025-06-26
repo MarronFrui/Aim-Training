@@ -95,8 +95,14 @@ function menuBehavior(mode) {
 function handleAccuracy() {
   let shotFired = 0;
   let accurateClick = 0;
+  let ignoreNextClick = true; // pour ignorer le tout premier clic
 
   const accuracy = (event) => {
+    if (ignoreNextClick) {
+      ignoreNextClick = false;
+      return; // ignore le premier clic (celui du bouton Start)
+    }
+
     shotFired++;
 
     const target = event.target;
@@ -106,13 +112,11 @@ function handleAccuracy() {
       accurateClick++;
     }
 
-    const accuracyValue = (accurateClick / (shotFired - 1)) * 100; //(-1) remove very first click on start button
+    const accuracyValue = shotFired > 0 ? (accurateClick / shotFired) * 100 : 0;
     accuracyDisplay.textContent = `Accuracy : ${accuracyValue.toFixed(2)}%`;
 
     if (getTimeLeft() <= 0) {
       document.removeEventListener("click", accuracy);
-      shotFired = 0;
-      accurateClick = 0;
     }
   };
 
