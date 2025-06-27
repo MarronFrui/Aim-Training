@@ -16,6 +16,7 @@ const highScores = {
   "flick shot": 0,
   tracking: 0,
 };
+
 let timerInterval = undefined;
 let score = 0;
 let timeLeft = null;
@@ -97,8 +98,20 @@ function handleAccuracy() {
   let accurateClick = 0;
   let ignoreNextClick = true;
 
-  const accuracy = (event) => {
+  //Base structure to implement accurate accuracy from trackingmode
+  // if (mode === "tracking") {
+  //   accuracyTic();
+  // } else {
+  //   accuracyClick();
+  // }
+
+  // const accuracyTic = (event) => {
+  //   document.addEventListener("mousedown", accuracyTic);
+  // };
+
+  const accuracyClick = (event) => {
     if (ignoreNextClick) {
+      //Because clicking on start game is considered in accuracy
       ignoreNextClick = false;
       return;
     }
@@ -116,11 +129,12 @@ function handleAccuracy() {
     accuracyDisplay.textContent = `Accuracy : ${accuracyValue.toFixed(2)}%`;
 
     if (getTimeLeft() <= 0) {
-      document.removeEventListener("click", accuracy);
+      document.removeEventListener("mousedown", accuracyClick);
+      document.removeEventListener("click", accuracyClick);
     }
   };
 
-  document.addEventListener("click", accuracy);
+  document.addEventListener("click", accuracyClick);
 }
 
 function startGame() {
