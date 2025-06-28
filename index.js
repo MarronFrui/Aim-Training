@@ -20,6 +20,12 @@ const highScores = {
 let timerInterval = undefined;
 let score = 0;
 let timeLeft = null;
+let trackingOnTargetTime = 0;
+let trackingTotalTime = 0;
+let trackingInterval = null;
+let shotFired = 0;
+let hit = 0;
+let ignoreNextClick = true;
 
 function getTimeLeft() {
   return timeLeft;
@@ -37,7 +43,6 @@ function updateScore() {
 
 function onTargetHit(target, mode = "classic") {
   if (mode !== "tracking") {
-    // Animation on hit
     const hitEffect = document.createElement("div");
     hitEffect.className = "hit-effect";
 
@@ -74,6 +79,7 @@ function menuBehavior(mode) {
 
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
+      stopTrackingAccuracy();
       timer.textContent = "";
       container.innerHTML = "";
       button.style.display = "block";
@@ -94,54 +100,78 @@ function menuBehavior(mode) {
 }
 
 function handleAccuracy() {
-  let shotFired = 0;
-  let accurateClick = 0;
-  let ignoreNextClick = true;
+  const mode = document.querySelector('input[name="mode"]:checked').value;
 
-  //Base structure to implement accurate accuracy from trackingmode
-  // if (mode === "tracking") {
-  //   accuracyTic();
-  // } else {
-  //   accuracyClick();
-  // }
-
-  // const accuracyTic = (event) => {
-  //   document.addEventListener("mousedown", accuracyTic);
-  // };
+  shotFired = 0;
+  hit = 0;
+  ignoreNextClick = true;
 
   const accuracyClick = (event) => {
     if (ignoreNextClick) {
-      //Because clicking on start game is considered in accuracy
       ignoreNextClick = false;
       return;
     }
 
-    shotFired++;
-
     const target = event.target;
     const isHit = target.classList.contains("target");
 
-    if (isHit) {
-      accurateClick++;
-    }
+    shotFired++;
+    if (isHit) hit++;
 
-    const accuracyValue = shotFired > 0 ? (accurateClick / shotFired) * 100 : 0;
+    const accuracyValue = shotFired > 0 ? (hit / shotFired) * 100 : 0;
     accuracyDisplay.textContent = `Accuracy : ${accuracyValue.toFixed(2)}%`;
 
     if (getTimeLeft() <= 0) {
-      document.removeEventListener("mousedown", accuracyClick);
       document.removeEventListener("click", accuracyClick);
     }
   };
 
-  document.addEventListener("click", accuracyClick);
+  if (mode === "tracking") {
+    startTrackingAccuracy();
+  } else {
+    document.addEventListener("click", accuracyClick);
+  }
+}
+
+function startTrackingAccuracy() {
+  trackingOnTargetTime = 0;
+  trackingTotalTime = 0;
+
+  trackingInterval = setInterval(() => {
+    if (getTimeLeft() <= 0) {
+      stopTrackingAccuracy();
+      return;
+    }
+    trackingTotalTime += 50;
+    updateTrackingAccuracy();
+  }, 50);
+}
+
+function stopTrackingAccuracy() {
+  if (trackingInterval) {
+    clearInterval(trackingInterval);
+    trackingInterval = null;
+  }
+}
+
+function addOnTargetTick() {
+  trackingOnTargetTime += 50;
+  updateTrackingAccuracy();
+}
+
+function updateTrackingAccuracy() {
+  const value =
+    trackingTotalTime > 0
+      ? (trackingOnTargetTime / trackingTotalTime) * 100
+      : 0;
+  accuracyDisplay.textContent = `Accuracy : ${value.toFixed(2)}%`;
 }
 
 function startGame() {
   const mode = document.querySelector('input[name="mode"]:checked').value;
   container.innerHTML = "";
   score = 0;
-  targetsPositions.length = 0;
+
   updateScore();
 
   maxScoreDisplay.textContent = `High Score (${mode}) : ${highScores[mode]}`;
@@ -153,7 +183,9 @@ function startGame() {
   } else if (mode === "flick shot") {
     flickShotLoop();
   } else if (mode === "tracking") {
-    spawnTrackingTarget(container, onTargetHit, getTimeLeft);
+    spawnTrackingTarget(container, onTargetHit, getTimeLeft, {
+      onTickOnTarget: () => addOnTargetTick(),
+    });
   }
 
   menuBehavior(mode);

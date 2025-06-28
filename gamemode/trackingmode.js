@@ -1,7 +1,12 @@
 import { diameter } from "../config.js";
 import { targetMove } from "../config.js";
 
-export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
+export function spawnTrackingTarget(
+  container,
+  onTargetHit,
+  getTimeLeft,
+  hooks = {}
+) {
   const target = document.createElement("div");
   target.classList.add("target");
   target.style.width = `${diameter.targetSize}px`;
@@ -13,21 +18,23 @@ export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
 
   const handleMouseDown = (e) => {
     e.preventDefault();
-    IsInTarget(target);
+    IsInTarget();
   };
 
   const handleMouseEnter = (e) => {
     if (e.buttons === 1) {
-      IsInTarget(target);
+      IsInTarget();
     }
   };
 
   function IsInTarget() {
     if (!isHolding) {
       isHolding = true;
+      if (hooks.onEnterTarget) hooks.onEnterTarget();
       holdInterval = setInterval(() => {
         if (getTimeLeft() > 0) {
           onTargetHit(target, "tracking");
+          if (hooks.onTickOnTarget) hooks.onTickOnTarget();
         }
       }, 50);
     }
@@ -37,6 +44,7 @@ export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
     if (isHolding) {
       isHolding = false;
       clearInterval(holdInterval);
+      if (hooks.onLeaveTarget) hooks.onLeaveTarget();
     }
   }
 
