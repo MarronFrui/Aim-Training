@@ -22,7 +22,6 @@ let score = 0;
 let timeLeft = null;
 let trackingOnTargetTime = 0;
 let trackingTotalTime = 0;
-let trackingInterval = null;
 
 let shotFired = 0;
 let hit = 0;
@@ -79,7 +78,6 @@ function menuBehavior(mode) {
 
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      stopTrackingAccuracy();
       timer.textContent = "";
       container.innerHTML = "";
       button.style.display = "block";
@@ -127,21 +125,9 @@ function handleAccuracy() {
   };
 
   if (mode === "tracking") {
+  } else {
     document.addEventListener("click", accuracyClick);
   }
-}
-
-function addOnTargetTick() {
-  trackingOnTargetTime += 50;
-  updateTrackingAccuracy();
-}
-
-function updateTrackingAccuracy() {
-  const value =
-    trackingTotalTime > 0
-      ? (trackingOnTargetTime / trackingTotalTime) * 100
-      : 0;
-  accuracyDisplay.textContent = `Accuracy : ${value.toFixed(2)}%`;
 }
 
 function startGame() {
@@ -160,9 +146,7 @@ function startGame() {
   } else if (mode === "flick shot") {
     flickShotLoop();
   } else if (mode === "tracking") {
-    spawnTrackingTarget(container, onTargetHit, getTimeLeft, {
-      onTick: () => addOnTargetTick(),
-    });
+    spawnTrackingTarget(container, onTargetHit, getTimeLeft);
   }
 
   menuBehavior(mode);
