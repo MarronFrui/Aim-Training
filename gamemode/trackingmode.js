@@ -33,13 +33,14 @@ export function spawnTrackingTarget(
       if (hooks.onEnterTarget) hooks.onEnterTarget();
       holdInterval = setInterval(() => {
         if (getTimeLeft() > 0) {
+          trackingTotalTime += 50; //
           onTargetHit(target, "tracking");
-          if (hooks.onTickOnTarget) hooks.onTickOnTarget();
+          if (hooks.onTick) hooks.onTick();
+          updateTrackingAccuracy();
         }
       }, 50);
     }
   }
-
   function IsOutOfTarget() {
     if (isHolding) {
       isHolding = false;
