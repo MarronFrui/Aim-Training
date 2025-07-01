@@ -124,22 +124,31 @@ function handleAccuracy() {
     }
   };
 
-  // const accuracyTick = (event) => {
-  //   if (ignoreNextClick) {
-  //     ignoreNextClick = false;
-  //     return;
-  //   }
+  const accuracyTick = (event) => {
+    if (ignoreNextClick) {
+      ignoreNextClick = false;
+      return;
+    }
 
-  //   const accuracyValue = shotFired > 0 ? (hit / shotFired) * 100 : 0;
-  //   accuracyDisplay.textContent = `Accuracy : ${accuracyValue.toFixed(2)}%`;
+    const target = event.target;
+    const isHit = target.classList.contains("target");
 
-  //   if (getTimeLeft() <= 0) {
-  //     document.removeEventListener("click", accuracyTick);
-  //   }
-  // };
+    if (isHit) hit++;
+
+    setInterval(() => {
+      shotfired++;
+    }, 50);
+
+    const accuracyValue = shotFired > 0 ? (hit / shotFired) * 100 : 0;
+    accuracyDisplay.textContent = `Accuracy : ${accuracyValue.toFixed(2)}%`;
+
+    if (getTimeLeft() <= 0) {
+      document.removeEventListener("mousedown", accuracyTick);
+    }
+  };
 
   if (mode === "tracking") {
-    // document.addEventListener("click", accuracyTick);
+    document.addEventListener("mousedown", accuracyTick);
   } else {
     document.addEventListener("click", accuracyClick);
   }
