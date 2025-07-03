@@ -103,6 +103,7 @@ button:hover {
       margin-bottom: 4px;
     }
     #score {
+      user-select: none;
       font-weight: normal;
     }
   }
