@@ -23,10 +23,6 @@ let score = 0;
 let timeLeft = null;
 let trackingInterval = null;
 
-let shotFired = 0;
-let hit = 0;
-let wasHit = false;
-let ignoreNextClick = true;
 function getTimeLeft() {
   return timeLeft;
 }
@@ -99,12 +95,14 @@ function menuBehavior(mode) {
 
 function handleAccuracy() {
   const mode = document.querySelector('input[name="mode"]:checked').value;
+  let shotFired = 0;
+  let hit = 0;
+  let ignoreNextClick = true;
+  let mouseDown = false; // Handle interval using mouseUp and mouseDown
 
   shotFired = 0;
   hit = 0;
   ignoreNextClick = true;
-
-  let mouseDown = false; // Handle interval
 
   const onMouseDown = () => {
     if (mouseDown) return;
@@ -118,6 +116,7 @@ function handleAccuracy() {
   };
 
   const accuracyClick = (event) => {
+    //Used for point and click
     if (ignoreNextClick) {
       ignoreNextClick = false;
       return;
@@ -134,26 +133,19 @@ function handleAccuracy() {
 
     if (getTimeLeft() <= 0) {
       document.removeEventListener("click", accuracyClick);
-      document.removeEventListener("mousedown", onMouseDown);
-      document.removeEventListener("mouseup", onMouseUp);
     }
   };
 
   function accuracyTick(isTargetBeingHeld) {
-    console.log("isHeld", isTargetBeingHeld);
-
+    //Used for tracking
     do {
       if (isTargetBeingHeld) {
         tick();
       }
     } while (getTimeLeft > 0);
   }
-  const tick = (event) => {
-    if (ignoreNextClick) {
-      ignoreNextClick = false;
-      return;
-    }
 
+  const tick = (event) => {
     let accuracyValue = 0;
     trackingInterval = setInterval(() => {
       shotFired++;
@@ -180,6 +172,10 @@ function handleAccuracy() {
     document.addEventListener("click", accuracyClick);
   }
 }
+
+// function statsDisplay() {
+//   return;
+// }
 
 function startGame() {
   const mode = document.querySelector('input[name="mode"]:checked').value;

@@ -1,11 +1,11 @@
 import { diameter } from "../config.js";
 import { targetMove } from "../config.js";
 
+let isHolding = false;
+
 export function isTargetBeingHeld() {
   return isHolding;
 }
-
-let isHolding = false;
 
 export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
   const target = document.createElement("div");
