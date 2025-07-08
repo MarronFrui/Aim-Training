@@ -7,6 +7,7 @@ import { isTargetBeingHeld } from "./gamemode/trackingmode.js";
 const menu = document.getElementById("menu");
 const startButton = document.getElementById("StartButton");
 const statsButton = document.getElementById("StatsButton");
+const statsMenu = document.getElementById("statsMenu");
 const timer = document.getElementById("timer");
 const container = document.getElementById("target-container");
 const scoreDisplay = document.getElementById("score");
@@ -194,7 +195,8 @@ function startGame() {
 }
 
 statsButton.addEventListener("click", () => {
-  stats.style.display = stats.style.display === "none" ? "block" : "none";
+  statsMenu.style.display =
+    statsMenu.style.display === "none" ? "flex" : "none";
 });
 
 startButton.addEventListener("click", () => {
