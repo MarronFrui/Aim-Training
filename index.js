@@ -95,6 +95,7 @@ function menuBehavior(mode) {
   }, 1000);
 }
 
+// Need to fix the issue where addEventListener calls stack up. handleAccuracy shouldn't define nested functions.
 function handleAccuracy() {
   const mode = document.querySelector('input[name="mode"]:checked').value;
   let shotFired = 0;
