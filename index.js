@@ -5,7 +5,8 @@ import { diameter } from "./config.js";
 import { isTargetBeingHeld } from "./gamemode/trackingmode.js";
 
 const menu = document.getElementById("menu");
-const button = document.getElementById("StartButton");
+const startButton = document.getElementById("StartButton");
+const statsButton = document.getElementById("StatsButton");
 const timer = document.getElementById("timer");
 const container = document.getElementById("target-container");
 const scoreDisplay = document.getElementById("score");
@@ -63,7 +64,7 @@ async function flickShotLoop() {
 }
 
 function menuBehavior(mode) {
-  button.style.display = "none";
+  startButton.style.display = "none";
   menu.style.display = "none";
   scoreDisplay.style.display = "block";
   accuracyDisplay.style.display = "block";
@@ -76,7 +77,7 @@ function menuBehavior(mode) {
       clearInterval(timerInterval);
       timer.textContent = "";
       container.innerHTML = "";
-      button.style.display = "block";
+      startButton.style.display = "block";
       menu.style.display = "flex";
       scoreDisplay.style.display = "none";
       accuracyDisplay.style.display = "none";
@@ -159,9 +160,6 @@ function handleAccuracy() {
       document.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mouseup", onMouseUp);
     }
-    console.log("acc", accuracyValue);
-    console.log("total", shotFired);
-    console.log("hit", hit);
   };
 
   if (mode === "tracking") {
@@ -172,10 +170,6 @@ function handleAccuracy() {
     document.addEventListener("click", accuracyClick);
   }
 }
-
-// function statsDisplay() {
-//   return;
-// }
 
 function startGame() {
   const mode = document.querySelector('input[name="mode"]:checked').value;
@@ -199,7 +193,11 @@ function startGame() {
   menuBehavior(mode);
 }
 
-button.addEventListener("click", () => {
+statsButton.addEventListener("click", () => {
+  stats.style.display = stats.style.display === "none" ? "block" : "none";
+});
+
+startButton.addEventListener("click", () => {
   clearInterval(timerInterval);
   timeLeft = 10;
   updateTimer(timeLeft);
