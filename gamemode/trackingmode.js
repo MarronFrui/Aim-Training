@@ -1,11 +1,6 @@
+// trackingmode.js
 import { diameter } from "../config.js";
 import { targetMove } from "../config.js";
-
-let isHolding = false;
-
-export function isTargetBeingHeld() {
-  return isHolding;
-}
 
 export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
   const target = document.createElement("div");
@@ -14,47 +9,37 @@ export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
   target.style.height = `${diameter.targetSize}px`;
   container.appendChild(target);
 
+  let isHolding = false;
   let holdInterval = null;
 
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    IsInTarget();
-  };
-
-  const handleMouseEnter = (e) => {
-    if (e.buttons === 1) {
-      IsInTarget();
-    }
-  };
-
-  function IsInTarget() {
-    if (!isHolding) {
+  function startHold() {
+    if (!isHolding && getTimeLeft() > 0) {
       isHolding = true;
       holdInterval = setInterval(() => {
-        if (getTimeLeft() > 0) {
-          onTargetHit(target, "tracking");
-        }
+        onTargetHit(target, "tracking");
       }, 50);
     }
   }
-  function IsOutOfTarget() {
+
+  function stopHold() {
     if (isHolding) {
       isHolding = false;
       clearInterval(holdInterval);
     }
   }
 
-  target.addEventListener("mousedown", handleMouseDown);
-  target.addEventListener("mouseenter", handleMouseEnter);
-  target.addEventListener("mouseup", IsOutOfTarget);
-  target.addEventListener("mouseleave", IsOutOfTarget);
+  target.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    startHold();
+  });
 
-  if (getTimeLeft === 0) {
-    target.removeEventListener("mousedown", handleMouseDown);
-    target.removeEventListener("mouseenter", handleMouseEnter);
-    target.removeEventListener("mouseup", IsOutOfTarget);
-    target.removeEventListener("mouseleave", IsOutOfTarget);
-  }
+  target.addEventListener("mouseenter", (e) => {
+    if (e.buttons === 1) startHold();
+  });
 
-  targetMove(target, IsOutOfTarget, getTimeLeft);
+  target.addEventListener("mouseup", stopHold);
+  target.addEventListener("mouseleave", stopHold);
+
+  targetMove(target, stopHold, getTimeLeft);
+  return target;
 }
