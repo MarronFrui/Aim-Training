@@ -18,12 +18,12 @@ export class UIController {
     this.timer.textContent = `${min}:${sec < 10 ? "0" : ""}${sec}`;
   }
 
-  resetUI(mode, highScore) {
+  resetUI(mode, highScore, initialTime) {
     this.menu.style.display = "none";
     this.scoreDisplay.style.display = "block";
     this.accuracyDisplay.style.display = "block";
     this.updateScore(0);
-    this.updateTimer(10);
+    this.updateTimer(initialTime);
     this.maxScoreDisplay.textContent = `High Score (${mode}) : ${highScore}`;
   }
 
