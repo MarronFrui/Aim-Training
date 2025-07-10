@@ -2,10 +2,10 @@ export const diameter = {
   targetSize: 70,
 };
 
-export function targetMove(target, IsOutOfTarget, getTimeLeft, state = null) {
+export function targetMove(target, getTimeLeft, state = null) {
   const bounds = {
-    width: window.innerWidth - diameter.targetSize,
-    height: window.innerHeight - diameter.targetSize,
+    width: window.innerWidth - diameter.targetSize - 50,
+    height: window.innerHeight - diameter.targetSize - 50,
   };
 
   if (!state) {
@@ -18,12 +18,6 @@ export function targetMove(target, IsOutOfTarget, getTimeLeft, state = null) {
         y: Math.random() * bounds.height,
       },
     };
-  }
-
-  if (getTimeLeft() <= 0) {
-    target.remove();
-    IsOutOfTarget();
-    return;
   }
 
   const { direction, pos } = state;
@@ -54,7 +48,5 @@ export function targetMove(target, IsOutOfTarget, getTimeLeft, state = null) {
   target.style.left = `${pos.x}px`;
   target.style.top = `${pos.y}px`;
 
-  requestAnimationFrame(() =>
-    targetMove(target, IsOutOfTarget, getTimeLeft, state)
-  );
+  requestAnimationFrame(() => targetMove(target, getTimeLeft, state));
 }

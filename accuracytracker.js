@@ -45,6 +45,7 @@ export class accuracyTracker {
     if (this.getTimeLeft() <= 0) return;
 
     const isHit = e.target.classList.contains("target");
+    if (e.target.closest("button")) return;
     this.shots++;
     if (isHit) this.hits++;
     this.updateDisplay();

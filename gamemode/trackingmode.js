@@ -40,6 +40,6 @@ export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
   target.addEventListener("mouseup", stopHold);
   target.addEventListener("mouseleave", stopHold);
 
-  targetMove(target, stopHold, getTimeLeft);
+  targetMove(target, getTimeLeft);
   return target;
 }

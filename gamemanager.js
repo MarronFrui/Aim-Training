@@ -71,7 +71,7 @@ class GameManager {
     this.mode = document.querySelector('input[name="mode"]:checked').value;
     this.container.innerHTML = "";
     this.score = 0;
-    this.timeLeft = 15;
+    this.timeLeft = 5;
 
     this.ui.resetUI(this.mode, this.highScores[this.mode], this.timeLeft);
     this.accuracy.start(this.mode);
