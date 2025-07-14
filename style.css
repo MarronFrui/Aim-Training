@@ -1,7 +1,6 @@
 body {
   background-color: #1f1f1f;
   margin: 0;
-  height: 100vh;
   color: white;
   overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
@@ -58,7 +57,7 @@ button:hover {
 .menu {
   display: flex;
   position: relative;
-  top: 25%;
+  padding-top: 205px;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
@@ -79,7 +78,6 @@ button:hover {
 }
 
 .stats-container {
-  top: 30%;
   min-width: 400px;
   min-height: 300px;
   z-index: 10;
@@ -88,9 +86,6 @@ button:hover {
 .centered {
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
-
-  position: relative;
 }
 
 .menu-checkbox {
