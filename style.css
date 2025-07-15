@@ -44,13 +44,15 @@ button:hover {
 }
 
 #StartButton {
-  margin-top: 18rem;
+  position: fixed;
+  top: 83%;
   scale: 3;
   z-index: 3;
 }
 
 #StatsButton {
   position: fixed;
+  top: 70%;
   z-index: 2;
 }
 
@@ -78,14 +80,11 @@ button:hover {
 }
 
 .stats-container {
+  position: fixed;
+  top: 5%;
   min-width: 400px;
   min-height: 300px;
   z-index: 10;
-}
-
-.centered {
-  display: flex;
-  justify-content: space-evenly;
 }
 
 .menu-checkbox {
