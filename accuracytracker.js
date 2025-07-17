@@ -15,6 +15,7 @@ export class accuracyTracker {
     this.mode = mode;
     this.shots = 0;
     this.hits = 0;
+    this.isRunning = true;
     this.updateDisplay();
 
     if (mode === "tracking") {
@@ -27,6 +28,7 @@ export class accuracyTracker {
   }
 
   stop() {
+    this.isRunning = false;
     document.removeEventListener("mousedown", this._onMouseDown);
     document.removeEventListener("mouseup", this._onMouseUp);
     document.removeEventListener("click", this._onClick);
@@ -53,6 +55,8 @@ export class accuracyTracker {
 
   // Tracking mode
   _onMouseDown = () => {
+    if (!this.isRunning) return;
+
     this.isMouseDown = true;
     if (!this.rafId) {
       this.lastTime = performance.now();
@@ -76,7 +80,7 @@ export class accuracyTracker {
   };
 
   _tick = () => {
-    if (!this.isMouseDown || this.getTimeLeft() <= 0) {
+    if (!this.isMouseDown || !this.isRunning || this.getTimeLeft() <= 0) {
       this.rafId = null;
       return;
     }

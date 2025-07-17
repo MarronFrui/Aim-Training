@@ -34,13 +34,12 @@ export function targetMove(target, getTimeLeft) {
   pickNewDirection();
 
   function step(timestamp) {
-    if (getTimeLeft() <= 0) return; // stop animating if game ended
-
+    if (getTimeLeft() <= 0) return;
     if (state.lastTime === null) {
       state.lastTime = timestamp;
     }
 
-    const deltaTime = (timestamp - state.lastTime) / 1000; // in seconds
+    const deltaTime = (timestamp - state.lastTime) / 1000;
     state.lastTime = timestamp;
 
     const dx = state.direction.x * deltaTime;
@@ -49,6 +48,10 @@ export function targetMove(target, getTimeLeft) {
     state.pos.x += dx;
     state.pos.y += dy;
     state.distanceTraveled += Math.hypot(dx, dy);
+
+    // Make sure the target is not stuck out of bounds
+    state.pos.x = Math.max(0, Math.min(state.pos.x, bounds.width));
+    state.pos.y = Math.max(0, Math.min(state.pos.y, bounds.height));
 
     // If we hit the bounds or finished distance, change direction
     if (
