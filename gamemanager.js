@@ -3,12 +3,15 @@ import { spawnFlickTarget } from "./gamemode/flickshotmode.js";
 import { spawnTrackingTarget } from "./gamemode/trackingmode.js";
 import { UIController } from "./UIController.js";
 import { accuracyTracker } from "./accuracytracker.js";
+import { StatsManager } from "./statsmanager.js";
 
 class GameManager {
   constructor() {
     this.container = document.getElementById("target-container");
     this.targetsPositions = [];
+    this.statsManager = new StatsManager();
     this.highScores = {
+      // old method to save score, need to merge it with statmanager
       classic: 0,
       "flick shot": 0,
       tracking: 0,
@@ -29,11 +32,14 @@ class GameManager {
     });
   }
 
-  toggleStatsMenu() {
+  toggleStatsMenu = () => {
     const statsMenu = document.getElementById("statsMenu");
-    statsMenu.style.display =
-      statsMenu.style.display === "none" ? "flex" : "none";
-  }
+    const isVisible = statsMenu.style.display === "flex";
+    statsMenu.style.display = isVisible ? "none" : "flex";
+    if (!isVisible) {
+      this.ui.updateStatsDisplay(this.statsManager);
+    }
+  };
 
   getTimeLeft() {
     return this.timeLeft;
@@ -108,10 +114,25 @@ class GameManager {
     this.container.innerHTML = "";
 
     if (this.score > this.highScores[this.mode]) {
+      //old method
       this.highScores[this.mode] = this.score;
     }
 
     this.ui.showHighScore(this.mode, this.highScores[this.mode]);
+    const currentAccuracy = this.accuracy.getCurrentAccuracy
+      ? this.accuracy.getCurrentAccuracy()
+      : 0;
+    const currentTPM = this.accuracy.getCurrentTPM
+      ? this.accuracy.getCurrentTPM()
+      : 0;
+
+    this.statsManager.updateStats(
+      this.mode,
+      this.score,
+      currentAccuracy,
+      currentTPM
+    );
+
     this.accuracy.stop();
   }
 }

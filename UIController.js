@@ -12,6 +12,25 @@ export class UIController {
     this.scoreDisplay.textContent = `Score : ${score}`;
   }
 
+  updateStatsDisplay(statsManager) {
+    const modes = ["classic", "flick shot", "tracking"];
+    modes.forEach((mode) => {
+      const stat = statsManager.getStats(mode);
+
+      const highScoreEl = document.getElementById(`${mode}-highscore`);
+      if (highScoreEl && stat)
+        highScoreEl.textContent = `High Score: ${stat.highScore}`;
+
+      const accuracyEl = document.getElementById(`${mode}-accuracy`);
+      if (accuracyEl && stat)
+        accuracyEl.textContent = `Max Accuracy: ${stat.maxAccuracy}%`;
+
+      const tpmEl = document.getElementById(`${mode}-tpm`);
+      if (tpmEl && stat)
+        tpmEl.textContent = `TPM: ${stat.maxTPM || stat.targetsPerMinute || 0}`;
+    });
+  }
+
   updateTimer(timeLeft) {
     const min = Math.floor(timeLeft / 60);
     const sec = timeLeft % 60;
