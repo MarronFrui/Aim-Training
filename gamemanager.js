@@ -55,6 +55,7 @@ class GameManager {
     }
     this.score++;
     this.updateScore();
+    console.log("Tracking hit at", Date.now());
   };
 
   async flickShotLoop() {

@@ -13,18 +13,27 @@ export function spawnTrackingTarget(container, onTargetHit, getTimeLeft) {
   let holdInterval = null;
 
   function startHold() {
-    if (!isHolding && getTimeLeft() > 0) {
-      isHolding = true;
-      holdInterval = setInterval(() => {
-        onTargetHit(target, "tracking");
-      }, 50);
-    }
+    if (isHolding || holdInterval) return; //prevent from starHold to be called again if running
+
+    if (getTimeLeft() <= 0) return;
+
+    isHolding = true;
+    holdInterval = setInterval(() => {
+      if (getTimeLeft() <= 0) {
+        stopHold();
+        return;
+      }
+      onTargetHit(target, "tracking");
+    }, 50);
   }
 
   function stopHold() {
-    if (isHolding) {
-      isHolding = false;
+    if (!isHolding) return;
+    isHolding = false;
+
+    if (holdInterval) {
       clearInterval(holdInterval);
+      holdInterval = null;
     }
   }
 
