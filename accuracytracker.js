@@ -9,6 +9,7 @@ export class accuracyTracker {
     this.timeSinceLastShot = 0;
     this.lastTime = 0;
     this.rafId = null;
+    this.maxAccuracyAchieved = 0;
   }
 
   start(mode) {
@@ -99,6 +100,12 @@ export class accuracyTracker {
     this.updateDisplay();
     this.rafId = requestAnimationFrame(this._tick);
   };
+
+  getFinalAccuracy() {
+    const maxAccuracy = 0;
+    if (accuracy > current.maxAccuracy) current.maxAccuracy = accuracy;
+    return maxAccuracy;
+  }
 
   registerTarget(targetEl) {
     this.targetEl = targetEl;

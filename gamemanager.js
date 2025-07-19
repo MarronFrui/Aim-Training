@@ -120,9 +120,8 @@ class GameManager {
     }
 
     this.ui.showHighScore(this.mode, this.highScores[this.mode]);
-    const currentAccuracy = this.accuracy.getCurrentAccuracy
-      ? this.accuracy.getCurrentAccuracy()
-      : 0;
+
+    const maxAccuracy = this.accuracy.getFinalAccuracy();
     const currentTPM = this.accuracy.getCurrentTPM
       ? this.accuracy.getCurrentTPM()
       : 0;
@@ -130,7 +129,7 @@ class GameManager {
     this.statsManager.updateStats(
       this.mode,
       this.score,
-      currentAccuracy,
+      maxAccuracy,
       currentTPM
     );
 
