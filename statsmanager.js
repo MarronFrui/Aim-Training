@@ -2,7 +2,7 @@ export class StatsManager {
   constructor() {
     this.defaultStats = {
       classic: { highScore: 0, maxAccuracy: 0, maxTPM: 0 },
-      "flick shot": { highScore: 0, maxAccuracy: 0, maxTPM: 0 },
+      flickshot: { highScore: 0, maxAccuracy: 0, maxTPM: 0 },
       tracking: { highScore: 0, maxAccuracy: 0, maxTPM: 0 },
     };
 
@@ -16,7 +16,6 @@ export class StatsManager {
 
   updateStats(mode, score, accuracy, tpm) {
     const current = this.stats[mode];
-
     if (score > current.highScore) current.highScore = score;
     if (accuracy > current.maxAccuracy) current.maxAccuracy = accuracy;
     if (tpm > current.maxTPM) current.maxTPM = tpm;

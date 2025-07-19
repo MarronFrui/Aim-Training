@@ -9,7 +9,7 @@ export class accuracyTracker {
     this.timeSinceLastShot = 0;
     this.lastTime = 0;
     this.rafId = null;
-    this.maxAccuracyAchieved = 0;
+    this.maxAccuracy = 0;
   }
 
   start(mode) {
@@ -17,6 +17,7 @@ export class accuracyTracker {
     this.shots = 0;
     this.hits = 0;
     this.isRunning = true;
+    this.maxAccuracy = 0;
     this.updateDisplay();
 
     if (mode === "tracking") {
@@ -102,9 +103,7 @@ export class accuracyTracker {
   };
 
   getFinalAccuracy() {
-    const maxAccuracy = 0;
-    if (accuracy > current.maxAccuracy) current.maxAccuracy = accuracy;
-    return maxAccuracy;
+    return this.maxAccuracy;
   }
 
   registerTarget(targetEl) {
@@ -115,6 +114,9 @@ export class accuracyTracker {
 
   updateDisplay() {
     const accuracy = this.shots > 0 ? (this.hits / this.shots) * 100 : 0;
+    if (accuracy > this.maxAccuracy) {
+      this.maxAccuracy = accuracy;
+    }
     this.accuracyDisplay.textContent = `Accuracy : ${accuracy.toFixed(2)}%`;
   }
 }

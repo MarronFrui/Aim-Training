@@ -10,12 +10,6 @@ class GameManager {
     this.container = document.getElementById("target-container");
     this.targetsPositions = [];
     this.statsManager = new StatsManager();
-    this.highScores = {
-      // old method to save score, need to merge it with statmanager
-      classic: 0,
-      "flick shot": 0,
-      tracking: 0,
-    };
     this.ui = new UIController();
     this.accuracy = new accuracyTracker(this.getTimeLeft.bind(this));
 
@@ -62,7 +56,6 @@ class GameManager {
     }
     this.score++;
     this.updateScore();
-    console.log("Tracking hit at", Date.now());
   };
 
   async flickShotLoop() {
@@ -83,11 +76,11 @@ class GameManager {
 
   startGame() {
     this.mode = document.querySelector('input[name="mode"]:checked').value;
+    let currentStats = this.statsManager.getStats(this.mode);
+    this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
     this.container.innerHTML = "";
     this.score = 0;
     this.timeLeft = 5;
-
-    this.ui.resetUI(this.mode, this.highScores[this.mode], this.timeLeft);
     this.accuracy.start(this.mode);
     this.updateScore();
     this.startTimer();
@@ -98,7 +91,7 @@ class GameManager {
           spawnTarget(this.container, this.targetsPositions, this.onTargetHit);
         }
         break;
-      case "flick shot":
+      case "flickshot":
         this.flickShotLoop();
         break;
       case "tracking":
@@ -117,22 +110,16 @@ class GameManager {
   }
 
   endGame() {
-    clearInterval(this.timerInterval);
-    this.ui.showMenu();
-    this.container.innerHTML = "";
-
-    if (this.score > this.highScores[this.mode]) {
-      //old method
-      this.highScores[this.mode] = this.score;
-    }
-
-    this.ui.showHighScore(this.mode, this.highScores[this.mode]);
-
+    const stats = this.statsManager.getStats(this.mode);
     const maxAccuracy = this.accuracy.getFinalAccuracy();
     const currentTPM = this.accuracy.getCurrentTPM
       ? this.accuracy.getCurrentTPM()
       : 0;
 
+    clearInterval(this.timerInterval);
+    this.ui.showMenu();
+    this.container.innerHTML = "";
+    this.ui.showHighScore(this.mode, stats.highScore);
     this.statsManager.updateStats(
       this.mode,
       this.score,

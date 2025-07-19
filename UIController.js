@@ -13,21 +13,20 @@ export class UIController {
   }
 
   updateStatsDisplay(statsManager) {
-    const modes = ["classic", "flick shot", "tracking"];
+    const modes = ["classic", "flickshot", "tracking"];
     modes.forEach((mode) => {
-      const stat = statsManager.getStats(mode);
-
-      const highScoreEl = document.getElementById(`${mode}-highscore`);
-      if (highScoreEl && stat)
-        highScoreEl.textContent = `High Score: ${stat.highScore}`;
-
-      const accuracyEl = document.getElementById(`${mode}-accuracy`);
-      if (accuracyEl && stat)
-        accuracyEl.textContent = `Max Accuracy: ${stat.maxAccuracy}%`;
-
-      const tpmEl = document.getElementById(`${mode}-tpm`);
-      if (tpmEl && stat)
-        tpmEl.textContent = `TPM: ${stat.maxTPM || stat.targetsPerMinute || 0}`;
+      const stats = statsManager.getStats(mode) || {
+        highScore: 0,
+        maxAccuracy: 0,
+        TPM: 0,
+      };
+      document.getElementById(
+        `${mode}-highscore`
+      ).textContent = `High Score: ${stats.highScore}`;
+      document.getElementById(
+        `${mode}-accuracy`
+      ).textContent = `Max Accuracy: ${stats.maxAccuracy}%`;
+      document.getElementById(`${mode}-tpm`).textContent = `TPM: ${stats.TPM}`;
     });
   }
 
