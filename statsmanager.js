@@ -24,6 +24,11 @@ export class StatsManager {
     this.saveStats();
   }
 
+  resetStats() {
+    this.stats = structuredClone(this.defaultStats);
+    this.saveStats();
+  }
+
   saveStats() {
     localStorage.setItem("stats", JSON.stringify(this.stats));
   }

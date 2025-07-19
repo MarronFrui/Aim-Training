@@ -25,10 +25,17 @@ class GameManager {
   init() {
     const statsButton = document.getElementById("StatsButton");
     const startButton = document.getElementById("StartButton");
+    const resetStatsButton = document.getElementById("ResetStatsButton");
 
     statsButton.addEventListener("click", this.toggleStatsMenu);
     startButton.addEventListener("click", () => {
       this.startGame();
+    });
+
+    resetStatsButton.addEventListener("click", () => {
+      this.statsManager.resetStats();
+      alert("Stats have been reset.");
+      this.ui.updateStatsDisplay(this.statsManager); // Optional: refresh the stats display
     });
   }
 
