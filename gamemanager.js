@@ -10,45 +10,16 @@ class GameManager {
     this.container = document.getElementById("target-container");
     this.targetsPositions = [];
     this.statsManager = new StatsManager();
-    this.ui = new UIController();
+
+    this.ui = new UIController(this.statsManager, this.startGame.bind(this));
+
     this.accuracy = new accuracyTracker(this.getTimeLeft.bind(this));
-
-    this.init();
   }
 
-  init() {
-    const statsButton = document.getElementById("statsButton");
-    const startButton = document.getElementById("startButton");
-    const resetStatsButton = document.getElementById("resetStatsButton");
-    const settingsButton = document.getElementById("settingsButton");
-
-    statsButton.addEventListener("click", this.toggleStatsMenu);
-    settingsButton.addEventListener("click", this.toggleSettingsMenu);
-    startButton.addEventListener("click", () => {
-      this.startGame();
-    });
-
-    resetStatsButton.addEventListener("click", () => {
-      this.statsManager.resetStats();
-      alert("Stats have been reset.");
-      this.ui.updateStatsDisplay(this.statsManager); // Optional: refresh the stats display
-    });
+  resetStats() {
+    this.statsManager.resetStats();
+    this.ui.updateStatsDisplay();
   }
-
-  toggleStatsMenu = () => {
-    const statsMenu = document.getElementById("statsMenu");
-    const isVisible = statsMenu.style.display === "flex";
-    statsMenu.style.display = isVisible ? "none" : "flex";
-    if (!isVisible) {
-      this.ui.updateStatsDisplay(this.statsManager);
-    }
-  };
-
-  toggleSettingsMenu = () => {
-    const settingsMenu = document.getElementById("settingsMenu");
-    const isVisible = settingsMenu.style.display === "flex";
-    settingsMenu.style.display = isVisible ? "none" : "flex";
-  };
 
   getTimeLeft() {
     return this.timeLeft;
@@ -88,7 +59,7 @@ class GameManager {
     this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
     this.container.innerHTML = "";
     this.score = 0;
-    this.timeLeft = 5;
+    this.timeLeft = Number(document.getElementById("gameTime").value) || 5;
     this.accuracy.start(this.mode);
     this.updateScore();
     this.startTimer();
@@ -110,7 +81,6 @@ class GameManager {
         );
 
         this.accuracy.registerTarget(trackingTarget);
-
         break;
       default:
         console.warn("Unknown game mode:", this.mode);

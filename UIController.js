@@ -1,21 +1,56 @@
-// UIController.js
 export class UIController {
-  constructor() {
+  constructor(statsManager, onStartGame) {
+    this.onStartGame = onStartGame;
+    this.statsManager = statsManager;
+    // UI Elements
     this.scoreDisplay = document.getElementById("score");
     this.timer = document.getElementById("timer");
     this.maxScoreDisplay = document.getElementById("max-score");
     this.accuracyDisplay = document.getElementById("accuracy");
     this.menu = document.getElementById("menu");
+    this.statsMenu = document.getElementById("statsMenu");
+    this.settingsMenu = document.getElementById("settingsMenu");
+
+    // Bind buttons
+    document
+      .getElementById("statsButton")
+      .addEventListener("click", () => this.toggleStatsMenu());
+    document
+      .getElementById("settingsButton")
+      .addEventListener("click", () => this.toggleSettingMenu());
+    document
+      .getElementById("startButton")
+      .addEventListener("click", this.onStartGame);
+    document
+      .getElementById("resetStatsButton")
+      .addEventListener("click", () => {
+        this.statsManager.resetStats();
+        alert("Stats have been reset.");
+        this.updateStatsDisplay();
+      });
+  }
+
+  toggleStatsMenu() {
+    const isVisible = this.statsMenu.style.display === "flex";
+    this.statsMenu.style.display = isVisible ? "none" : "flex";
+    if (!isVisible) {
+      this.updateStatsDisplay();
+    }
+  }
+
+  toggleSettingMenu() {
+    const isVisible = this.settingsMenu.style.display === "flex";
+    this.settingsMenu.style.display = isVisible ? "none" : "flex";
   }
 
   updateScore(score) {
     this.scoreDisplay.textContent = `Score : ${score}`;
   }
 
-  updateStatsDisplay(statsManager) {
+  updateStatsDisplay() {
     const modes = ["classic", "flickshot", "tracking"];
     modes.forEach((mode) => {
-      const stats = statsManager.getStats(mode) || {
+      const stats = this.statsManager.getStats(mode) || {
         highScore: 0,
         maxAccuracy: 0,
       };

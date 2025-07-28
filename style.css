@@ -98,10 +98,13 @@ button:hover {
 .stats-container,
 .settings-container {
   position: fixed;
-  top: 21%;
   min-width: 400px;
   min-height: 300px;
   z-index: 10;
+}
+
+.setting-group {
+  align-items: flex-start;
 }
 
 .stats-grid {
