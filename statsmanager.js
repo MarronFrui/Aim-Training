@@ -1,9 +1,9 @@
 export class StatsManager {
   constructor() {
     this.defaultStats = {
-      classic: { highScore: 0, maxAccuracy: 0, maxTPM: 0 },
-      flickshot: { highScore: 0, maxAccuracy: 0, maxTPM: 0 },
-      tracking: { highScore: 0, maxAccuracy: 0, maxTPM: 0 },
+      classic: { highScore: 0, maxAccuracy: 0 },
+      flickshot: { highScore: 0, maxAccuracy: 0 },
+      tracking: { highScore: 0, maxAccuracy: 0 },
     };
 
     const stored = JSON.parse(localStorage.getItem("stats"));
@@ -14,11 +14,10 @@ export class StatsManager {
     return this.stats[mode];
   }
 
-  updateStats(mode, score, accuracy, tpm) {
+  updateStats(mode, score, accuracy) {
     const current = this.stats[mode];
     if (score > current.highScore) current.highScore = score;
     if (accuracy > current.maxAccuracy) current.maxAccuracy = accuracy;
-    if (tpm > current.maxTPM) current.maxTPM = tpm;
 
     this.saveStats();
   }

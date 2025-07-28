@@ -18,15 +18,13 @@ export class UIController {
       const stats = statsManager.getStats(mode) || {
         highScore: 0,
         maxAccuracy: 0,
-        TPM: 0,
       };
       document.getElementById(
         `${mode}-highscore`
       ).textContent = `High Score: ${stats.highScore}`;
       document.getElementById(
         `${mode}-accuracy`
-      ).textContent = `Max Accuracy: ${stats.maxAccuracy}%`;
-      document.getElementById(`${mode}-tpm`).textContent = `TPM: ${stats.TPM}`;
+      ).textContent = `Max Accuracy: ${stats.maxAccuracy.toFixed(2)}%`;
     });
   }
 
