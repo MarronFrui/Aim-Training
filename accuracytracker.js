@@ -103,7 +103,7 @@ export class accuracyTracker {
   };
 
   getFinalAccuracy() {
-    return this.maxAccuracy;
+    return this.shots > 0 ? (this.hits / this.shots) * 100 : 0;
   }
 
   registerTarget(targetEl) {
@@ -114,9 +114,6 @@ export class accuracyTracker {
 
   updateDisplay() {
     const accuracy = this.shots > 0 ? (this.hits / this.shots) * 100 : 0;
-    if (accuracy > this.maxAccuracy) {
-      this.maxAccuracy = accuracy;
-    }
     this.accuracyDisplay.textContent = `Accuracy : ${accuracy.toFixed(2)}%`;
   }
 }

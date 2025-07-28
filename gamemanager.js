@@ -111,10 +111,8 @@ class GameManager {
 
   endGame() {
     const stats = this.statsManager.getStats(this.mode);
-    const maxAccuracy = this.accuracy.getFinalAccuracy();
-    const currentTPM = this.accuracy.getCurrentTPM
-      ? this.accuracy.getCurrentTPM()
-      : 0;
+    const finalAccuracy = this.accuracy.getFinalAccuracy();
+    const currentTPM = this.accuracy.getTPM ? this.accuracy.getTPM() : 0;
 
     clearInterval(this.timerInterval);
     this.ui.showMenu();
@@ -123,7 +121,7 @@ class GameManager {
     this.statsManager.updateStats(
       this.mode,
       this.score,
-      maxAccuracy,
+      finalAccuracy,
       currentTPM
     );
 
