@@ -12,6 +12,14 @@ button,
   color: white;
 }
 
+.settings {
+  background-color: rgb(23, 100, 126);
+}
+
+.settings:hover {
+  background-color: rgb(38, 162, 204);
+}
+
 .grid {
   position: absolute;
   width: 100vw;
@@ -43,16 +51,22 @@ button:hover {
   background-color: #2de036;
 }
 
-#StartButton {
+#startButton {
   position: fixed;
   top: 83%;
   scale: 3;
   z-index: 3;
 }
 
-#StatsButton {
+#statsButton {
   position: fixed;
   top: 70%;
+  z-index: 2;
+}
+
+#settingsButton {
+  position: fixed;
+  top: 75%;
   z-index: 2;
 }
 
@@ -68,7 +82,8 @@ button:hover {
 }
 
 .menu-container,
-.stats-container {
+.stats-container,
+.settings-container {
   display: flex;
   background-color: #2c2c2c;
   border: 2px solid #4caf50;
@@ -77,11 +92,13 @@ button:hover {
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  z-index: 2;
 }
 
-.stats-container {
+.stats-container,
+.settings-container {
   position: fixed;
-  top: 20%;
+  top: 21%;
   min-width: 400px;
   min-height: 300px;
   z-index: 10;

@@ -43,9 +43,10 @@
           </label>
         </form>
       </div>
-      <button id="StartButton">Start</button>
-      <button id="StatsButton">Stats</button>
-      <button id="ResetStatsButton">Reset Stats</button>
+      <button id="startButton">Start</button>
+      <button id="statsButton">Stats</button>
+      <button class="settings" id="settingsButton">Settings</button>
+      <button id="resetStatsButton">Reset Stats</button>
       <div class="stats-container" id="statsMenu" style="display: none">
         <h2>Stats</h2>
         <div class="stats-grid">
@@ -66,6 +67,37 @@
           </div>
         </div>
       </div>
+      <div class="settings-container" id="settingsMenu" style="display: none">
+  <h2>Settings</h2>
+
+  <!-- Global Setting -->
+  <div class="setting-group">
+    <label for="gameTime">Game Time (seconds):</label>
+    <input type="number" id="gameTime" min="5" max="300" step="1" value="30" />
+  </div>
+
+  <!-- Classic Mode Setting -->
+  <div class="setting-group">
+    <label for="classicTargets">Classic Mode - Number of Targets:</label>
+    <input type="range" id="classicTargets" min="1" max="20" step="1" value="5" />
+    <span id="classicTargetsValue">5</span>
+  </div>
+
+  <!-- Flickshot Mode Setting -->
+  <div class="setting-group">
+    <label for="flickshotSpeed">Flick Shot - Target Spawn Delay (ms):</label>
+    <input type="number" id="flickshotSpeed" min="100" max="3000" step="100" value="700" />
+  </div>
+
+  <!-- Tracking Mode Setting -->
+  <div class="setting-group">
+    <label for="trackingSpeed">Tracking Mode - Target Speed (px/sec):</label>
+    <input type="number" id="trackingSpeed" min="50" max="1000" step="10" value="200" />
+  </div>
+
+  <button id="saveSettingsButton">Save Settings</button>
+</div>
+
     </section>
 
       <div id="timer"></div>

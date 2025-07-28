@@ -17,11 +17,13 @@ class GameManager {
   }
 
   init() {
-    const statsButton = document.getElementById("StatsButton");
-    const startButton = document.getElementById("StartButton");
-    const resetStatsButton = document.getElementById("ResetStatsButton");
+    const statsButton = document.getElementById("statsButton");
+    const startButton = document.getElementById("startButton");
+    const resetStatsButton = document.getElementById("resetStatsButton");
+    const settingsButton = document.getElementById("settingsButton");
 
     statsButton.addEventListener("click", this.toggleStatsMenu);
+    settingsButton.addEventListener("click", this.toggleSettingsMenu);
     startButton.addEventListener("click", () => {
       this.startGame();
     });
@@ -40,6 +42,12 @@ class GameManager {
     if (!isVisible) {
       this.ui.updateStatsDisplay(this.statsManager);
     }
+  };
+
+  toggleSettingsMenu = () => {
+    const settingsMenu = document.getElementById("settingsMenu");
+    const isVisible = settingsMenu.style.display === "flex";
+    settingsMenu.style.display = isVisible ? "none" : "flex";
   };
 
   getTimeLeft() {
