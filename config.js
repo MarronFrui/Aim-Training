@@ -19,7 +19,8 @@ export function targetMove(target, getTimeLeft) {
     lastTime: null,
   };
 
-  const speed = 300; // pixels per second
+  const trackingSpeedSlider = document.getElementById("trackingSpeed");
+  const speed = parseInt(trackingSpeedSlider.value, 10);
 
   function pickNewDirection() {
     const angle = Math.random() * 2 * Math.PI;

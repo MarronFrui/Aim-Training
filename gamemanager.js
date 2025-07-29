@@ -69,7 +69,11 @@ class GameManager {
 
     switch (this.mode) {
       case "classic":
-        for (let i = 0; i < 5; i++) {
+        const targetNumber = parseInt(
+          document.getElementById("classicTargets").value,
+          10
+        );
+        for (let i = 0; i < targetNumber; i++) {
           spawnTarget(this.container, this.targetsPositions, this.onTargetHit);
         }
         break;

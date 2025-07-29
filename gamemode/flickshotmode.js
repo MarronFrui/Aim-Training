@@ -7,6 +7,9 @@ export function spawnFlickTarget(container, onTargetHit) {
   const x = Math.random() * (window.innerWidth - targetSize);
   const y = Math.random() * (window.innerHeight - targetSize);
 
+  const flickshotSpeedSlider = document.getElementById("flickshotSpeed");
+  const delay = parseInt(flickshotSpeedSlider.value, 10);
+
   target.classList.add("target");
   target.style.width = `${targetSize}px`;
   target.style.height = `${targetSize}px`;
@@ -15,7 +18,7 @@ export function spawnFlickTarget(container, onTargetHit) {
 
   const timeout = setTimeout(() => {
     target.remove();
-  }, 700);
+  }, delay);
 
   target.addEventListener("click", () => {
     clearTimeout(timeout);
