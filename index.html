@@ -9,10 +9,11 @@
 
   <body>
     <div class="grid"></div>
+
     <section class="menu" id="menu">
       <div class="menu-container">
         <h2>Select game mode</h2>
-        <form action="menu-selection" method="form">
+        <form action="menu-selection" method="post">
           <label style="display: flex; align-items: center; margin-bottom: 4px">
             <input
               type="radio"
@@ -43,10 +44,13 @@
           </label>
         </form>
       </div>
+
       <button id="startButton">Start</button>
       <button id="statsButton">Stats</button>
       <button class="settings" id="settingsButton">Settings</button>
       <button id="resetStatsButton">Reset Stats</button>
+
+      <!-- Stats Section -->
       <div class="stats-container" id="statsMenu" style="display: none">
         <h2>Stats</h2>
         <div class="stats-grid">
@@ -67,50 +71,93 @@
           </div>
         </div>
       </div>
+
+      <!-- Settings Section -->
       <div class="settings-container" id="settingsMenu" style="display: none">
-  <h2>Settings</h2>
+        <h2>Settings</h2>
 
-  <!-- Global Setting -->
-  <div class="setting-group">
-    <label for="gameTime">Game Time (seconds):</label>
-    <input type="number" id="gameTime" min="1" max="300" step="1" value="30" />
-  </div>
+        <!-- Global Setting -->
+        <div class="setting-group">
+          <label for="gameTime"
+            >Game Time (seconds): <span id="gameTimeValue">30</span></label
+          >
+          <input
+            type="range"
+            class="slider"
+            id="gameTime"
+            min="1"
+            max="300"
+            step="1"
+            value="30"
+          />
+        </div>
 
-  <!-- Classic Mode Setting -->
-  <div class="setting-group">
-    <label for="classicTargets">Classic Mode - Number of Targets:</label>
-    <input type="range" id="classicTargets" min="1" max="20" step="1" value="5" />
-    <span id="classicTargetsValue">5</span>
-  </div>
+        <!-- Classic Mode Setting -->
+        <div class="setting-group">
+          <label for="classicTargets"
+            >Classic Mode - Number of Targets:
+            <span id="classicTargetsValue">5</span></label
+          >
+          <input
+            type="range"
+            class="slider"
+            id="classicTargets"
+            min="1"
+            max="20"
+            step="1"
+            value="5"
+          />
+        </div>
 
-  <!-- Flickshot Mode Setting -->
-  <div class="setting-group">
-    <label for="flickshotSpeed">Flick Shot - Target Spawn Delay (ms):</label>
-    <input type="number" id="flickshotSpeed" min="100" max="3000" step="100" value="700" />
-  </div>
+        <!-- Flickshot Mode Setting -->
+        <div class="setting-group">
+          <label for="flickshotSpeed"
+            >Flick Shot - Target Spawn Delay (ms):
+            <span id="flickShotValue">70</span></label
+          >
+          <input
+            type="range"
+            class="slider"
+            id="flickshotSpeed"
+            min="10"
+            max="300"
+            step="5"
+            value="70"
+          />
+        </div>
 
-  <!-- Tracking Mode Setting -->
-  <div class="setting-group">
-    <label for="trackingSpeed">Tracking Mode - Target Speed (px/sec):</label>
-    <input type="number" id="trackingSpeed" min="50" max="1000" step="10" value="200" />
-  </div>
+        <!-- Tracking Mode Setting -->
+        <div class="setting-group">
+          <label for="trackingSpeed"
+            >Tracking Mode - Target Speed (px/sec):
+            <span id="trackingTargetSpeed">300</span></label
+          >
+          <input
+            type="range"
+            class="slider"
+            id="trackingSpeed"
+            min="50"
+            max="1000"
+            step="10"
+            value="300"
+          />
+        </div>
 
-  <!-- this button doesn't do anything -->
-  <button id="saveSettingsButton">Save Settings</button>
-</div>
-
-    </section>
-
-      <div id="timer"></div>
-
-      <div id="score-container">
-        <div id="max-score">High Score : 0</div>
-        <div id="score" style="display: none">Score : 0</div>
-        <div id="accuracy" style="display: none">Accuracy : 0%</div>
+        <button id="saveSettingsButton">Save Settings</button>
       </div>
-
-      <div id="target-container"></div>
-      <script type="module" src="./gamemanager.js"></script>
     </section>
+
+    <div id="timer"></div>
+
+    <div id="score-container">
+      <div id="max-score">High Score : 0</div>
+      <div id="score" style="display: none">Score : 0</div>
+      <div id="accuracy" style="display: none">Accuracy : 0%</div>
+    </div>
+
+    <div id="target-container"></div>
+
+    <script type="module" src="./gamemanager.js"></script>
+    <script type="module" src="./UIController.js"></script>
   </body>
 </html>

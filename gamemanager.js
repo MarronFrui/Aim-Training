@@ -4,6 +4,9 @@ import { spawnTrackingTarget } from "./gamemode/trackingmode.js";
 import { UIController } from "./UIController.js";
 import { accuracyTracker } from "./accuracytracker.js";
 import { StatsManager } from "./statsmanager.js";
+import { initSliderUI } from "./UIController.js";
+
+initSliderUI();
 
 class GameManager {
   constructor() {

@@ -103,3 +103,24 @@ export class UIController {
     setTimeout(() => document.body.removeChild(hitEffect), 300);
   }
 }
+
+export function initSliderUI() {
+  const sliders = [
+    { id: "gameTime", labelId: "gameTimeValue" },
+    { id: "classicTargets", labelId: "classicTargetsValue" },
+    { id: "flickshotSpeed", labelId: "flickShotValue" },
+    { id: "trackingSpeed", labelId: "trackingTargetSpeed" },
+  ];
+
+  sliders.forEach(({ id, labelId }) => {
+    const slider = document.getElementById(id);
+    const label = document.getElementById(labelId);
+
+    if (!slider || !label) return;
+
+    label.textContent = slider.value;
+    slider.addEventListener("input", () => {
+      label.textContent = slider.value;
+    });
+  });
+}
