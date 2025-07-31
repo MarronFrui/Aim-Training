@@ -55,7 +55,7 @@ export class UIController {
         maxAccuracy: 0,
       };
       document.getElementById(
-        `${mode}-highscore`
+        `${mode}-highScore`
       ).textContent = `High Score: ${stats.highScore}`;
       document.getElementById(
         `${mode}-accuracy`
