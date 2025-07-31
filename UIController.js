@@ -71,6 +71,7 @@ export class UIController {
 
   resetUI(mode, highScore, initialTime) {
     this.menu.style.display = "none";
+    this.maxScoreDisplay.style.display = "block";
     this.scoreDisplay.style.display = "block";
     this.accuracyDisplay.style.display = "block";
     this.updateScore(0);
@@ -80,6 +81,7 @@ export class UIController {
 
   showMenu() {
     this.menu.style.display = "flex";
+    this.maxScoreDisplay.style.display = "none";
     this.scoreDisplay.style.display = "none";
     this.accuracyDisplay.style.display = "none";
     this.timer.textContent = "";
