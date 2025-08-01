@@ -57,7 +57,9 @@ class GameManager {
   }
 
   startGame() {
-    this.mode = document.querySelector('input[name="mode"]:checked').value;
+    this.mode = document
+      .querySelector('input[name="mode"]:checked')
+      .value.toLowerCase(); //trying to fix case sensitivity on gitHub version
     let currentStats = this.statsManager.getStats(this.mode);
     this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
     this.container.innerHTML = "";
