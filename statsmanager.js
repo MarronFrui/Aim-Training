@@ -11,14 +11,6 @@ export class StatsManager {
   }
 
   getStats(mode) {
-    console.log("[StatsManager] Requested stats for mode:", mode);
-    console.log("[StatsManager] Current stats object:", this.stats);
-
-    if (!this.stats[mode]) {
-      console.warn(`[StatsManager] WARNING: No stats found for mode "${mode}"`);
-      return { highScore: 0, maxAccuracy: 0 }; // Fallback so your app doesn't crash
-    }
-
     return this.stats[mode];
   }
 
