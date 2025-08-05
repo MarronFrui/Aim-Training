@@ -16,6 +16,7 @@ class GameManager {
     this.statsManager = new StatsManager();
 
     this.ui = new UIController(this.statsManager, this.startGame.bind(this));
+    this.ui.gameManager = this; //related to charts ?
 
     this.accuracy = new accuracyTracker(this.getTimeLeft.bind(this));
   }
@@ -57,6 +58,21 @@ class GameManager {
     }, 1000);
   }
 
+  renderCharts() {
+    const limit = parseInt(document.getElementById("chartDataLimit").value, 10);
+
+    ["classic", "flickshot", "tracking"].forEach((mode) => {
+      const container = document.getElementById(`${mode}-chart`);
+      const history = this.statsManager.getStats(mode)?.history || [];
+
+      const limitedData = history.slice(-limit).map((entry) => ({
+        score: entry.score,
+        date: new Date(entry.timestamp),
+      }));
+
+      renderChart(container, limitedData);
+    });
+  }
   startGame() {
     this.mode = document
       .querySelector('input[name="mode"]:checked')

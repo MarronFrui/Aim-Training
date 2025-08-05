@@ -28,13 +28,36 @@ export class UIController {
         alert("Stats have been reset.");
         this.updateStatsDisplay();
       });
+
+    //charts
+
+    document.querySelectorAll(".chart-tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const selectedMode = btn.dataset.mode;
+
+        document.querySelectorAll(".chart-box").forEach((chart) => {
+          chart.style.display = "none";
+        });
+
+        document.getElementById(`${selectedMode}-chart`).style.display =
+          "block";
+      });
+    });
+    document.getElementById("chartDataLimit").addEventListener("change", () => {
+      this.gameManager.renderCharts(); // Re-render charts when user changes limit
+    });
   }
 
   toggleStatsMenu() {
     const isVisible = this.statsMenu.style.display === "flex";
     this.statsMenu.style.display = isVisible ? "none" : "flex";
+
     if (!isVisible) {
       this.updateStatsDisplay();
+
+      if (this.gameManager?.renderCharts) {
+        this.gameManager.renderCharts();
+      }
     }
   }
 
