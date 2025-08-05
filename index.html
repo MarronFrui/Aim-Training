@@ -68,10 +68,34 @@
             <h3>Tracking</h3>
             <p id="tracking-highScore">High Score: 0</p>
             <p id="tracking-accuracy">Max Accuracy: 0%</p>
-
-            <!-- <div id="chartContainer" style="margin-top: 20px"></div> -->
-            <!-- Related to D3 -->
           </div>
+        </div>
+
+        <!-- Chart Tabs -->
+        <div class="chart-tabs">
+          <button class="chart-tab" data-mode="classic">Classic</button>
+          <button class="chart-tab" data-mode="flickshot">Flick Shot</button>
+          <button class="chart-tab" data-mode="tracking">Tracking</button>
+          <select id="chartDataLimit" style="margin-left: 10px">
+            <option value="20" selected>Last 20 Games</option>
+            <option value="50">Last 50 Games</option>
+          </select>
+        </div>
+
+        <!-- Chart Containers -->
+        <div id="charts-container">
+          <div id="classic-chart" class="chart-box"></div>
+
+          <div
+            id="flickshot-chart"
+            class="chart-box"
+            style="display: none"
+          ></div>
+          <div
+            id="tracking-chart"
+            class="chart-box"
+            style="display: none"
+          ></div>
         </div>
       </div>
 

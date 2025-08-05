@@ -5,6 +5,7 @@ import { UIController } from "./UIController.js";
 import { accuracyTracker } from "./accuracytracker.js";
 import { StatsManager } from "./statsmanager.js";
 import { initSliderUI } from "./UIController.js";
+import { renderChart } from "./chartsmanager.js";
 
 initSliderUI();
 
@@ -59,7 +60,7 @@ class GameManager {
   startGame() {
     this.mode = document
       .querySelector('input[name="mode"]:checked')
-      .value.toLowerCase(); //trying to fix case sensitivity on gitHub version
+      .value.toLowerCase();
     let currentStats = this.statsManager.getStats(this.mode);
     this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
     this.container.innerHTML = "";

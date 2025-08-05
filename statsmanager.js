@@ -15,9 +15,20 @@ export class StatsManager {
   }
 
   updateStats(mode, score, accuracy) {
-    const current = this.stats[mode];
-    if (score > current.highScore) current.highScore = score;
-    if (accuracy > current.maxAccuracy) current.maxAccuracy = accuracy;
+    const stat = this.stats[mode];
+    stat.highScore = Math.max(stat.highScore, score);
+    stat.maxAccuracy = Math.max(stat.maxAccuracy, accuracy);
+
+    if (!stat.history) stat.history = [];
+    stat.history.push({
+      score,
+      accuracy,
+      timestamp: Date.now(),
+    });
+
+    if (stat.history.length > 50) {
+      stat.history = stat.history.slice(-50);
+    }
 
     this.saveStats();
   }
