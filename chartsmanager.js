@@ -8,10 +8,10 @@ export function renderChart(container, data) {
   const marginBottom = 30;
   const marginLeft = 40;
 
-  const x = d3.scaleUtc(
-    d3.extent(data, (d) => d.date),
-    [marginLeft, width - marginRight]
-  );
+  const x = d3
+    .scaleLinear()
+    .domain([1, data.length]) // Game numbers from 1 to N
+    .range([marginLeft, width - marginRight]);
 
   const y = d3.scaleLinear(
     [0, d3.max(data, (d) => d.score)],
@@ -20,7 +20,7 @@ export function renderChart(container, data) {
 
   const line = d3
     .line()
-    .x((d) => x(d.date))
+    .x((d, i) => x(i + 1))
     .y((d) => y(d.score));
 
   const svg = d3
