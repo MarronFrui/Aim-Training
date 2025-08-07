@@ -67,7 +67,7 @@ class GameManager {
 
       const limitedData = history.slice(-limit).map((entry) => ({
         score: entry.score,
-        date: new Date(entry.timestamp),
+        accuracy: entry.accuracy,
       }));
 
       renderChart(container, limitedData);
