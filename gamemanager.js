@@ -5,7 +5,7 @@ import { UIController } from "./UIController.js";
 import { accuracyTracker } from "./accuracytracker.js";
 import { StatsManager } from "./statsmanager.js";
 import { initSliderUI } from "./UIController.js";
-import { renderChart } from "./chartsmanager.js";
+import { drawGraphs } from "./chartsmanager.js";
 
 initSliderUI();
 
@@ -14,10 +14,8 @@ class GameManager {
     this.container = document.getElementById("target-container");
     this.targetsPositions = [];
     this.statsManager = new StatsManager();
-
     this.ui = new UIController(this.statsManager, this.startGame.bind(this));
     this.ui.gameManager = this; //related to charts
-
     this.accuracy = new accuracyTracker(this.getTimeLeft.bind(this));
   }
 
@@ -45,7 +43,9 @@ class GameManager {
   async flickShotLoop() {
     while (this.timeLeft > 0) {
       spawnFlickTarget(this.container, this.onTargetHit);
-      await new Promise((resolve) => setTimeout(resolve, 700));
+      const slider = document.getElementById("flickshotSpeed");
+      const delay = Number(slider.value);
+      await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }
 
@@ -58,33 +58,45 @@ class GameManager {
     }, 1000);
   }
 
-  renderCharts() {
+  renderCharts(showAccuracy = false) {
     const limit = parseInt(document.getElementById("chartDataLimit").value, 10);
 
     ["classic", "flickshot", "tracking"].forEach((mode) => {
-      const container = document.getElementById(`${mode}-chart`);
       const history = this.statsManager.getStats(mode)?.history || [];
-
       const limitedData = history.slice(-limit).map((entry) => ({
         score: entry.score,
         accuracy: entry.accuracy,
       }));
 
-      renderChart(container, limitedData);
+      const mainChartContainer = document.getElementById(`${mode}-chart`);
+
+      const accuracyContainer = document.getElementById(
+        `${mode}-accuracy-chart`
+      );
+
+      drawGraphs(
+        mainChartContainer,
+        limitedData,
+        showAccuracy ? "combined" : "scoreOnly"
+      );
+
+      drawGraphs(accuracyContainer, limitedData, "accuracyOnly");
     });
   }
+
   startGame() {
     this.mode = document
       .querySelector('input[name="mode"]:checked')
       .value.toLowerCase();
     let currentStats = this.statsManager.getStats(this.mode);
-    this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
-    this.container.innerHTML = "";
+
+    this.timeLeft = Number(document.getElementById("gameTime").value);
     this.score = 0;
-    this.timeLeft = Number(document.getElementById("gameTime").value) || 5;
+    this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
+    this.startTimer();
+    this.container.innerHTML = "";
     this.accuracy.start(this.mode);
     this.updateScore();
-    this.startTimer();
 
     switch (this.mode) {
       case "classic":
@@ -105,11 +117,8 @@ class GameManager {
           this.onTargetHit.bind(this),
           this.getTimeLeft.bind(this)
         );
-
         this.accuracy.registerTarget(trackingTarget);
         break;
-      default:
-        console.warn("Unknown game mode:", this.mode);
     }
   }
 

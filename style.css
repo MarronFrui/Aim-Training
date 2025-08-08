@@ -6,8 +6,8 @@
   --settings-hover: rgb(38, 162, 204);
   --text: white;
   --z-bg: 0;
-  --z-target: 1;
-  --z-ui: 2;
+  --z-ui: 1;
+  --z-target: 2;
   --z-menu: 3;
   --z-modal: 10;
 }
@@ -85,6 +85,10 @@ button:focus {
 }
 
 .menu {
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
   display: flex;
   position: relative;
   padding-top: 205px;
@@ -223,10 +227,12 @@ input[type="radio"] {
   margin-top: 20px;
 }
 
-/* small responsive tweak: reduce startButton scale on very small heights */
-@media (max-height: 600px) {
-  #startButton {
-    transform: scale(2);
-    top: 78%;
-  }
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
 }

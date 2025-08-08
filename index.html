@@ -83,7 +83,11 @@
         </div>
 
         <!-- Chart Containers -->
-        <div id="charts-container">
+        <div id="charts-container" class="row">
+          <label class="centered">
+            <input type="checkbox" id="toggleAccuracy" />
+            Toggle Accuracy
+          </label>
           <div id="classic-chart" class="chart-box"></div>
 
           <div
@@ -93,6 +97,17 @@
           ></div>
           <div
             id="tracking-chart"
+            class="chart-box"
+            style="display: none"
+          ></div>
+          <div id="classic-accuracy-chart" class="chart-box"></div>
+          <div
+            id="flickshot-accuracy-chart"
+            class="chart-box"
+            style="display: none"
+          ></div>
+          <div
+            id="tracking-accuracy-chart"
             class="chart-box"
             style="display: none"
           ></div>

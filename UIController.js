@@ -19,6 +19,11 @@ export class UIController {
       .getElementById("settingsButton")
       .addEventListener("click", () => this.toggleSettingMenu());
     document
+      .getElementById("saveSettingsButton")
+      .addEventListener("click", () => {
+        this.settingsMenu.style.display = "none";
+      });
+    document
       .getElementById("startButton")
       .addEventListener("click", this.onStartGame);
     document
@@ -35,17 +40,30 @@ export class UIController {
       btn.addEventListener("click", () => {
         const selectedMode = btn.dataset.mode;
 
+        // Hide all charts first
         document.querySelectorAll(".chart-box").forEach((chart) => {
           chart.style.display = "none";
         });
 
-        document.getElementById(`${selectedMode}-chart`).style.display =
-          "block";
+        // Show both the score chart and the accuracy chart for this mode
+        const scoreChart = document.getElementById(`${selectedMode}-chart`);
+        const accuracyChart = document.getElementById(
+          `${selectedMode}-accuracy-chart`
+        );
+
+        if (scoreChart) scoreChart.style.display = "block";
+        if (accuracyChart) accuracyChart.style.display = "block";
       });
     });
     document.getElementById("chartDataLimit").addEventListener("change", () => {
       this.gameManager.renderCharts(); // Re-render charts when user changes limit
     });
+    const toggleAccuracy = document.getElementById("toggleAccuracy");
+    if (toggleAccuracy) {
+      toggleAccuracy.addEventListener("change", (e) => {
+        this.gameManager?.renderCharts(e.target.checked);
+      });
+    }
   }
 
   toggleStatsMenu() {
