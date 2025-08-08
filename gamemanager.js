@@ -16,7 +16,7 @@ class GameManager {
     this.statsManager = new StatsManager();
 
     this.ui = new UIController(this.statsManager, this.startGame.bind(this));
-    this.ui.gameManager = this; //related to charts ?
+    this.ui.gameManager = this; //related to charts
 
     this.accuracy = new accuracyTracker(this.getTimeLeft.bind(this));
   }
