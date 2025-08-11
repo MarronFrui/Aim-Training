@@ -3,7 +3,7 @@ import { spawnFlickTarget } from "./gamemode/flickshotmode.js";
 import { spawnTrackingTarget } from "./gamemode/trackingmode.js";
 import { UIController } from "./UIController.js";
 import { accuracyTracker } from "./accuracytracker.js";
-import { StatsManager } from "./statsmanager.js";
+import { statsManager } from "./statsmanager.js";
 import { initSliderUI } from "./UIController.js";
 import { drawGraphs } from "./chartsmanager.js";
 
@@ -11,7 +11,7 @@ class GameManager {
   constructor() {
     this.container = document.getElementById("target-container");
     this.targetsPositions = [];
-    this.statsManager = new StatsManager();
+    this.statsManager = new statsManager();
     this.ui = new UIController(this.statsManager, this.startGame.bind(this));
     this.ui.gameManager = this; //related to charts
     this.accuracy = new accuracyTracker(this.getTimeLeft.bind(this));
@@ -86,7 +86,9 @@ class GameManager {
     this.mode = document
       .querySelector('input[name="mode"]:checked')
       .value.toLowerCase();
-    let currentStats = this.statsManager.getStats(this.mode);
+    let currentStats = this.statsManager.getStats(this.mode) || {
+      highScore: 0,
+    };
 
     this.timeLeft = Number(document.getElementById("gameTime").value);
     this.startTimer();

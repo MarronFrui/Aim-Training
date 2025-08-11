@@ -1,4 +1,4 @@
-export class StatsManager {
+export class statsManager {
   constructor() {
     this.defaultStats = {
       classic: { highScore: 0, maxAccuracy: 0 },
