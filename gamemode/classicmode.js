@@ -34,6 +34,13 @@ export function spawnTarget(container, targetsPositions, onTargetHit) {
     target.remove();
     const removeIndex = Number(target.dataset.index);
     targetsPositions.splice(removeIndex, 1);
+
+    // avoid overlapsOtherTargets to desync
+    const remainingTargets = container.querySelectorAll(".target");
+    remainingTargets.forEach((tgt, i) => {
+      tgt.dataset.index = i;
+    });
+
     spawnTarget(container, targetsPositions, onTargetHit);
   });
 
