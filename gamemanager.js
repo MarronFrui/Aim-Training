@@ -129,8 +129,8 @@ class GameManager {
     this.container.innerHTML = "";
     this.ui.showHighScore(this.mode, stats.highScore);
     this.statsManager.updateStats(this.mode, this.score, finalAccuracy);
-
     this.accuracy.stop();
+    this.targetsPositions.length = 0;
   }
 }
 

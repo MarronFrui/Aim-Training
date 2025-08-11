@@ -3,6 +3,7 @@ export const diameter = {
 };
 
 export function targetMove(target, getTimeLeft) {
+  let rafId = null;
   const bounds = {
     width: window.innerWidth - diameter.targetSize - 80,
     height: window.innerHeight - diameter.targetSize - 80,
@@ -35,7 +36,11 @@ export function targetMove(target, getTimeLeft) {
   pickNewDirection();
 
   function step(timestamp) {
-    if (getTimeLeft() <= 0) return;
+    if (getTimeLeft() <= 0) {
+      cancelAnimationFrame(rafId);
+      return; // Stop the animation loop immediately
+    }
+
     if (state.lastTime === null) {
       state.lastTime = timestamp;
     }
@@ -50,11 +55,9 @@ export function targetMove(target, getTimeLeft) {
     state.pos.y += dy;
     state.distanceTraveled += Math.hypot(dx, dy);
 
-    // Make sure the target is not stuck out of bounds
     state.pos.x = Math.max(0, Math.min(state.pos.x, bounds.width));
     state.pos.y = Math.max(0, Math.min(state.pos.y, bounds.height));
 
-    // If we hit the bounds or finished distance, change direction
     if (
       state.pos.x <= 0 ||
       state.pos.x >= bounds.width ||
@@ -68,8 +71,8 @@ export function targetMove(target, getTimeLeft) {
     target.style.left = `${state.pos.x}px`;
     target.style.top = `${state.pos.y}px`;
 
-    requestAnimationFrame(step);
+    rafId = requestAnimationFrame(step);
   }
 
-  requestAnimationFrame(step);
+  rafId = requestAnimationFrame(step);
 }
