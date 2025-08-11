@@ -86,13 +86,12 @@ class GameManager {
     this.mode = document
       .querySelector('input[name="mode"]:checked')
       .value.toLowerCase();
-    let currentStats = this.statsManager.getStats(this.mode) || {
-      highScore: 0,
-    };
+    let currentStats = this.statsManager.getStats(this.mode);
 
     this.timeLeft = Number(document.getElementById("gameTime").value);
     this.startTimer();
     this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
+    console.log(currentStats.highScore);
     this.container.innerHTML = "";
     this.score = 0;
     this.accuracy.start(this.mode);
