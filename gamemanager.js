@@ -7,8 +7,6 @@ import { StatsManager } from "./statsmanager.js";
 import { initSliderUI } from "./UIController.js";
 import { drawGraphs } from "./chartsmanager.js";
 
-initSliderUI();
-
 class GameManager {
   constructor() {
     this.container = document.getElementById("target-container");
@@ -91,10 +89,10 @@ class GameManager {
     let currentStats = this.statsManager.getStats(this.mode);
 
     this.timeLeft = Number(document.getElementById("gameTime").value);
-    this.score = 0;
-    this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
     this.startTimer();
+    this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
     this.container.innerHTML = "";
+    this.score = 0;
     this.accuracy.start(this.mode);
     this.updateScore();
 
@@ -136,4 +134,5 @@ class GameManager {
   }
 }
 
+initSliderUI();
 new GameManager();

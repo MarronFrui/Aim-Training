@@ -180,6 +180,7 @@ button:focus {
 
 .hit-effect {
   position: absolute;
+  pointer-events: none;
   background-color: red;
   border-radius: 50%;
   opacity: 0.5;
