@@ -91,7 +91,7 @@ class GameManager {
     this.timeLeft = Number(document.getElementById("gameTime").value);
     this.startTimer();
     this.ui.resetUI(this.mode, currentStats.highScore, this.timeLeft);
-    console.log(currentStats.highScore);
+
     this.container.innerHTML = "";
     this.score = 0;
     this.accuracy.start(this.mode);
